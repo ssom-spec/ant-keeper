@@ -1,0 +1,16 @@
+{
+  "name": "개미 사육 관리",
+  "short_name": "개미 사육 관리",
+  "description": "개미 개체, 급여 기록, 구입/판매 이력, 사전 검색을 관리하는 개인용 로컬 앱",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#0c1622",
+  "theme_color": "#0c1622",
+  "lang": "ko",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

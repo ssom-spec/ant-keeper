@@ -1,0 +1,2182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>개미 사육 관리</title>
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0c1622">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="개미 사육 관리">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c1622;
+  --bg-elevated:#122238;
+  --bg-card:#17293f;
+  --bg-card-hover:#1c3049;
+  --border:#243c56;
+  --border-strong:#385372;
+  --text:#eee7da;
+  --text-dim:#9fb0c3;
+  --text-faint:#67809b;
+  --accent-amber:#c98a4b;
+  --accent-amber-dim:#c98a4b22;
+  --accent-amber-glow:#c98a4b3d;
+  --accent-teal:#3f9490;
+  --accent-teal-dim:#3f949026;
+  --accent-rose:#c0614a;
+  --accent-rose-dim:#c0614a26;
+  --accent-green:#5b9c6d;
+  --accent-green-dim:#5b9c6d26;
+  --accent-gold:#dcae63;
+  --accent-gold-dim:#dcae6326;
+  --radius-s:7px;
+  --radius-m:11px;
+  --radius-l:18px;
+  --font-display:'Space Grotesk',system-ui,sans-serif;
+  --font-body:'Inter',system-ui,-apple-system,sans-serif;
+  --shadow-card:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -14px rgba(0,0,0,.6);
+  --shadow-card-hover:0 1px 2px rgba(0,0,0,.4), 0 16px 36px -14px rgba(0,0,0,.7), 0 0 0 1px var(--accent-amber-glow);
+}
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 12% -4%, #1a3350 0%, transparent 42%),
+    radial-gradient(circle at 92% 8%, #16293f 0%, transparent 38%),
+    radial-gradient(circle at 50% 110%, #142136 0%, transparent 45%),
+    var(--bg);
+  background-attachment:fixed;
+  color:var(--text);
+  font-family:var(--font-body);
+  font-size:15px;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:var(--font-display); margin:0; font-weight:600; letter-spacing:-.01em;}
+button{font-family:inherit;}
+::selection{background:var(--accent-amber-dim);}
+::-webkit-scrollbar{width:10px; height:10px;}
+::-webkit-scrollbar-thumb{background:var(--border-strong); border-radius:8px;}
+::-webkit-scrollbar-track{background:transparent;}
+a{color:inherit;}
+
+/* ---------- App shell ---------- */
+.app-shell{display:flex; min-height:100vh;}
+
+.rail{
+  width:212px; flex:0 0 212px;
+  background:linear-gradient(180deg,#0d1826,#0b1420);
+  border-right:1px solid var(--border);
+  display:flex; flex-direction:column;
+  padding:22px 14px;
+  position:sticky; top:0; height:100vh;
+}
+.brand{
+  display:flex; align-items:center; gap:10px;
+  padding:0 8px 22px 8px;
+  border-bottom:1px solid var(--border);
+  margin-bottom:18px;
+}
+.brand-mark{
+  width:36px; height:36px; border-radius:10px;
+  background:linear-gradient(150deg, #dba361, var(--accent-amber) 55%, #8a5a2c);
+  display:flex; align-items:center; justify-content:center;
+  flex:0 0 auto; box-shadow:0 4px 14px -4px #c98a4b70, inset 0 1px 0 #ffffff33;
+}
+.brand-mark svg{width:20px; height:20px;}
+.brand h1{font-size:15.5px; color:var(--text); letter-spacing:-.01em; font-weight:600;}
+
+.nav{display:flex; flex-direction:column; gap:3px;}
+.nav-btn{
+  display:flex; align-items:center; gap:11px;
+  padding:10px 12px 10px 14px; border-radius:var(--radius-m);
+  background:transparent; border:1px solid transparent; border-left:2.5px solid transparent;
+  color:var(--text-dim); cursor:pointer; text-align:left;
+  font-size:13.5px; font-weight:500; transition:background .15s, color .15s, border-color .15s;
+}
+.nav-btn .ico{width:18px; height:18px; flex:0 0 auto; opacity:.85;}
+.nav-btn:hover{background:#ffffff08; color:var(--text);}
+.nav-btn.active{background:linear-gradient(90deg,#c98a4b1c,transparent); color:#f1cfa0; border-left-color:var(--accent-amber);}
+
+.settings-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; align-items:start;}
+.settings-card{padding:20px 22px; display:flex; flex-direction:column; gap:12px;}
+.settings-card h3{font-size:15px;}
+.settings-card p{font-size:12.5px; color:var(--text-dim); line-height:1.6; margin:0;}
+.settings-actions{display:flex; gap:10px; flex-wrap:wrap;}
+.settings-hint{font-size:11.5px !important; color:var(--text-faint) !important;}
+.storage-size{font-size:19px; font-family:var(--font-display); color:var(--text); font-weight:600;}
+.danger-card{border-color:#c0614a3d;}
+.backup-progress{display:none; align-items:center; gap:8px; font-size:11.5px; color:var(--text-dim);}
+.backup-progress.active{display:flex;}
+.backup-progress .bar{flex:1; height:6px; border-radius:4px; background:var(--bg-elevated); overflow:hidden; border:1px solid var(--border);}
+.backup-progress .bar > div{height:100%; width:0%; background:linear-gradient(90deg,var(--accent-teal),var(--accent-amber));}
+
+.storage-banner{
+  display:none; align-items:flex-start; gap:12px;
+  background:var(--accent-rose-dim); border:1px solid #c0614a55; border-radius:var(--radius-m);
+  padding:13px 16px; margin-bottom:20px; font-size:13px; color:#f0c3b6;
+}
+.storage-banner.show{display:flex;}
+.storage-banner b{color:#f8ded3;}
+.storage-banner .close{margin-left:auto; background:none; border:none; color:#f0c3b6; cursor:pointer; font-size:16px; flex:0 0 auto;}
+
+.main{flex:1; min-width:0; padding:30px 36px 60px;}
+.page-head{
+  display:flex; align-items:flex-end; justify-content:space-between;
+  gap:16px; margin-bottom:24px; flex-wrap:wrap;
+}
+.page-head h2{font-size:24px;}
+.page-head p{margin:4px 0 0; color:var(--text-dim); font-size:13.5px;}
+.page-actions{display:flex; gap:10px;}
+
+.btn{
+  display:inline-flex; align-items:center; gap:7px;
+  border-radius:var(--radius-m); border:1px solid var(--border-strong);
+  background:var(--bg-card); color:var(--text);
+  padding:9px 15px; font-size:13.5px; font-weight:600;
+  cursor:pointer; transition:transform .08s, border-color .15s, background .15s;
+}
+.btn:hover{border-color:var(--accent-amber); background:#20385a;}
+.btn:active{transform:translateY(1px);}
+.btn-primary{
+  background:linear-gradient(135deg,var(--accent-amber),#a86f38);
+  border-color:transparent; color:#1a0f04;
+}
+.btn-primary:hover{filter:brightness(1.08); background:linear-gradient(135deg,var(--accent-amber),#a86f38);}
+.btn-ghost{background:transparent; border-color:var(--border);}
+.btn-danger{border-color:var(--accent-rose); color:#f3b7a8;}
+.btn-danger:hover{background:var(--accent-rose-dim); border-color:var(--accent-rose);}
+.btn-sm{padding:6px 11px; font-size:12.5px; border-radius:var(--radius-s);}
+.btn[disabled]{opacity:.45; cursor:not-allowed; pointer-events:none;}
+
+/* ---------- Cards / grid ---------- */
+.card{background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-l); box-shadow:var(--shadow-card);}
+.grid-ants{display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:16px;}
+.ant-card{
+  padding:0; overflow:hidden; cursor:pointer;
+  display:flex; flex-direction:column;
+  transition:border-color .15s, transform .1s;
+}
+.ant-card:hover{border-color:var(--border-strong); transform:translateY(-3px); box-shadow:var(--shadow-card-hover);}
+.ant-photo{
+  width:100%; aspect-ratio:4/3; background:#0d1826;
+  display:flex; align-items:center; justify-content:center;
+  overflow:hidden; position:relative;
+}
+.ant-photo img{width:100%; height:100%; object-fit:cover; display:block;}
+.photo-toggle-row{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:9px 14px; font-size:11.5px; color:var(--text-dim); font-weight:600;
+  border-bottom:1px solid var(--border); background:var(--bg-elevated);
+}
+.photo-toggle-row .chev{transition:transform .15s; display:flex;}
+.photo-toggle-row.open .chev{transform:rotate(180deg);}
+.photo-toggle-row:hover{color:var(--text);}
+.ant-body{padding:11px 14px 12px; display:flex; flex-direction:column; gap:5px;}
+.ant-row-top{display:flex; justify-content:space-between; align-items:center; gap:8px;}
+.ant-row-top h3{font-size:14px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0;}
+.feed-badge{
+  flex:0 0 auto; font-size:11px; font-weight:700; padding:3px 10px; border-radius:20px;
+  font-family:var(--font-display);
+}
+.feed-badge.ok{background:var(--accent-green-dim); color:#a9d6b6;}
+.feed-badge.warn{background:var(--accent-gold-dim); color:#eccd97;}
+.feed-badge.late{background:var(--accent-rose-dim); color:#eaab9b;}
+.feed-badge.fasting{background:var(--accent-teal-dim); color:#a6d9d5;}
+.ant-row-bottom{display:flex; justify-content:space-between; align-items:center; gap:10px; font-size:11.5px; color:var(--text-dim);}
+.ant-row-bottom .meta{overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1; min-width:0;}
+.ant-row-bottom .price{flex:0 0 auto; color:var(--text); font-weight:600;}
+.fasting-badge{
+  display:inline-flex; align-items:center; font-size:10px; font-weight:700; padding:2px 8px;
+  border-radius:20px; background:var(--accent-teal-dim); color:#a6d9d5; border:1px solid #3f949050;
+  margin-left:6px; letter-spacing:.02em; vertical-align:middle;
+}
+
+.empty{
+  border:1px dashed var(--border-strong); border-radius:var(--radius-l);
+  padding:48px 20px; text-align:center; color:var(--text-faint);
+}
+.empty svg{opacity:.4; margin-bottom:10px;}
+.empty h3{color:var(--text-dim); font-size:15px; margin-bottom:6px;}
+.empty p{font-size:13px; margin:0;}
+
+/* ---------- Filters / toolbar ---------- */
+.toolbar{display:flex; gap:10px; align-items:center; margin-bottom:18px; flex-wrap:wrap;}
+.input, select.input, textarea.input{
+  background:var(--bg-elevated); border:1px solid var(--border); border-radius:var(--radius-s);
+  color:var(--text); padding:8px 11px; font-size:13.5px; font-family:inherit;
+  outline:none; transition:border-color .15s;
+}
+.input::placeholder{color:var(--text-faint);}
+.input:focus{border-color:var(--accent-amber);}
+.search-input{flex:1; min-width:180px;}
+.chip-group{display:flex; gap:6px;}
+.chip{
+  padding:7px 13px; border-radius:20px; font-size:12.5px; font-weight:600;
+  border:1px solid var(--border); color:var(--text-dim); cursor:pointer; background:transparent;
+}
+.chip.active{background:var(--accent-amber-dim); border-color:#c98a4b55; color:#f1cfa0;}
+
+/* ---------- History table ---------- */
+.summary-row{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:22px;}
+.stat-card{padding:16px 18px;}
+.stat-card span{display:block; font-size:11.5px; color:var(--text-faint); margin-bottom:6px;}
+.stat-card b{font-size:21px; font-family:var(--font-display);}
+.stat-card.profit b.pos{color:#8fd1a2;}
+.stat-card.profit b.neg{color:#e79c8a;}
+
+table{width:100%; border-collapse:collapse; font-size:13px; table-layout:fixed;}
+.table-wrap{overflow:auto; border-radius:var(--radius-l);}
+.table-wrap table{min-width:640px;}
+thead th{
+  text-align:left; font-size:11px; text-transform:none; color:var(--text-faint);
+  padding:11px 14px; border-bottom:1px solid var(--border); background:var(--bg-elevated);
+  position:sticky; top:0; font-weight:600; white-space:nowrap;
+}
+tbody td{padding:11px 14px; border-bottom:1px solid var(--border); color:var(--text-dim); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr{cursor:pointer;}
+tbody tr:hover{background:#ffffff05;}
+td.strong{color:var(--text); font-weight:600;}
+.date-filter-label{display:flex; flex-direction:column; gap:4px; font-size:11px; color:var(--text-faint); font-weight:600;}
+.date-filter-label .input{margin-top:0;}
+.tag{display:inline-flex; padding:3px 9px; border-radius:20px; font-size:11px; font-weight:700;}
+.tag.buy{background:var(--accent-teal-dim); color:#8bd0cb;}
+.tag.sell{background:var(--accent-gold-dim); color:var(--accent-gold);}
+
+/* ---------- Modal ---------- */
+.overlay{
+  position:fixed; inset:0; background:#060d17d9; backdrop-filter:blur(2px);
+  display:flex; align-items:flex-start; justify-content:center;
+  padding:5vh 16px; z-index:100; overflow:auto;
+}
+.overlay.hidden{display:none;}
+.modal{
+  background:var(--bg-elevated); border:1px solid var(--border-strong); border-radius:var(--radius-l);
+  width:100%; max-width:560px; box-shadow:0 20px 60px -20px #000000a0;
+  animation:pop .16s ease-out;
+}
+.modal.wide{max-width:760px;}
+@keyframes pop{from{opacity:0; transform:translateY(6px) scale(.99);} to{opacity:1; transform:none;}}
+.modal-head{display:flex; align-items:center; justify-content:space-between; padding:18px 22px; border-bottom:1px solid var(--border);}
+.modal-head h3{font-size:16px;}
+.modal-close{background:none; border:none; color:var(--text-faint); font-size:20px; cursor:pointer; line-height:1; padding:4px;}
+.modal-close:hover{color:var(--text);}
+.modal-body{padding:20px 22px; max-height:72vh; overflow:auto;}
+.modal-foot{display:flex; justify-content:flex-end; gap:10px; padding:16px 22px; border-top:1px solid var(--border);}
+
+.form-grid{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+.form-grid .full{grid-column:1/-1;}
+.field label{display:block; font-size:12px; color:var(--text-dim); margin-bottom:6px; font-weight:600;}
+.field .input{width:100%;}
+.field .hint{font-size:11px; color:var(--text-faint); margin-top:4px;}
+.check-row{display:flex; align-items:center; gap:9px; padding:9px 0;}
+.check-row input[type=checkbox]{width:16px; height:16px; accent-color:var(--accent-amber);}
+.photo-drop{
+  border:1.5px dashed var(--border-strong); border-radius:var(--radius-m);
+  padding:16px; text-align:center; cursor:pointer; color:var(--text-dim); font-size:12.5px;
+  background:var(--bg-card); position:relative; overflow:hidden; min-height:110px;
+  display:flex; align-items:center; justify-content:center; flex-direction:column; gap:6px;
+}
+.photo-drop img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover;}
+.photo-drop .drop-label{position:relative; z-index:1; background:#0f1b2dcc; padding:6px 10px; border-radius:8px;}
+
+.care-log-list{display:flex; flex-direction:column; gap:6px; max-height:180px; overflow:auto; margin-top:8px;}
+.care-log-item{
+  display:flex; justify-content:space-between; align-items:center;
+  padding:7px 10px; border-radius:var(--radius-s); background:var(--bg-card); font-size:12px;
+}
+.care-log-item .del{background:none; border:none; color:var(--text-faint); cursor:pointer; font-size:14px;}
+.care-log-item .del:hover{color:var(--accent-rose);}
+
+/* ---------- Dictionary ---------- */
+.dict-layout{display:grid; grid-template-columns:250px 1fr; gap:20px; align-items:start;}
+.dict-sidebar{display:flex; flex-direction:column; gap:10px;}
+.dict-item{
+  display:flex; align-items:center; justify-content:space-between; gap:8px;
+  padding:10px 12px; border-radius:var(--radius-m); border:1px solid var(--border);
+  font-size:12.5px; background:var(--bg-card);
+}
+.dict-item .name{font-weight:600; color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.dict-item .meta{font-size:10.5px; color:var(--text-faint);}
+.dict-item .del{background:none; border:none; color:var(--text-faint); cursor:pointer; font-size:14px; flex:0 0 auto;}
+.dict-item .del:hover{color:var(--accent-rose);}
+
+.upload-zone{
+  border:1.5px dashed var(--border-strong); border-radius:var(--radius-m);
+  padding:18px 12px; text-align:center; color:var(--text-dim); font-size:12.5px; cursor:pointer;
+}
+.upload-zone:hover{border-color:var(--accent-teal); color:var(--text);}
+
+.result-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(178px,1fr)); gap:14px;}
+.page-card{overflow:hidden; cursor:pointer; position:relative; border-color:var(--border); transition:border-color .15s;}
+.page-card.selected{border-color:var(--accent-teal);}
+.page-select{
+  position:absolute; top:8px; left:8px; z-index:2; width:18px; height:18px;
+  accent-color:var(--accent-teal); cursor:pointer;
+}
+.page-thumb{width:100%; aspect-ratio:3/4; background:#0d1826; display:flex; align-items:center; justify-content:center; overflow:hidden;}
+.page-thumb img{width:100%; height:100%; object-fit:contain; display:block;}
+.page-meta{padding:9px 11px; display:flex; flex-direction:column; gap:6px;}
+.page-meta .p-no{font-size:12px; font-weight:700; font-family:var(--font-display);}
+.page-meta .p-dict{font-size:10.5px; color:var(--text-faint); overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+.page-meta .snippet{font-size:11px; color:var(--text-dim); overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; min-height:28px;}
+.page-meta .snippet mark{background:var(--accent-gold-dim); color:var(--accent-gold); border-radius:3px; padding:0 2px;}
+
+.dict-toolbar{display:flex; gap:10px; align-items:center; margin-bottom:14px; flex-wrap:wrap;}
+.progress-wrap{display:none; align-items:center; gap:10px; font-size:12px; color:var(--text-dim); margin-top:10px;}
+.progress-wrap.active{display:flex;}
+.progress-bar{flex:1; height:6px; border-radius:4px; background:var(--bg-card); overflow:hidden; border:1px solid var(--border);}
+.progress-bar > div{height:100%; width:0%; background:linear-gradient(90deg,var(--accent-teal),var(--accent-amber)); transition:width .2s;}
+
+.toast-wrap{position:fixed; bottom:22px; right:22px; display:flex; flex-direction:column; gap:8px; z-index:200;}
+.toast{
+  background:var(--bg-elevated); border:1px solid var(--border-strong); border-radius:var(--radius-m);
+  padding:12px 16px; font-size:13px; box-shadow:var(--shadow-card); max-width:320px;
+  animation:slidein .18s ease-out;
+}
+.toast.error{border-color:var(--accent-rose);}
+.toast.success{border-color:var(--accent-green);}
+@keyframes slidein{from{opacity:0; transform:translateX(12px);} to{opacity:1; transform:none;}}
+
+.viewer-img{width:100%; border-radius:var(--radius-m); border:1px solid var(--border);}
+
+@media (max-width:880px){
+  .app-shell{flex-direction:column;}
+  .rail{width:100%; flex:none; height:auto; position:relative; flex-direction:row; align-items:center; padding:12px 14px;}
+  .brand{border:none; margin:0; padding:0; flex:1;}
+  .nav{flex-direction:row;}
+  .nav-btn span.label{display:none;}
+  .main{padding:20px 16px 40px;}
+  .form-grid{grid-template-columns:1fr;}
+  .dict-layout{grid-template-columns:1fr;}
+  .summary-row{grid-template-columns:repeat(2,1fr);}
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:.001ms !important; transition-duration:.001ms !important;}
+}
+</style>
+</head>
+<body>
+
+<div class="app-shell">
+  <aside class="rail">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 32 32" fill="#1a0f04">
+          <ellipse cx="16" cy="9.5" rx="3.1" ry="2.9"/>
+          <ellipse cx="16" cy="16" rx="4.1" ry="3.9"/>
+          <ellipse cx="16" cy="23.6" rx="5" ry="5.6"/>
+          <path d="M16 12.3v2.2M16 19.6v2.3" stroke="#1a0f04" stroke-width="1.4"/>
+          <path d="M13.2 7.6 10.5 5.3M18.8 7.6l2.7-2.3" stroke="#1a0f04" stroke-width="1.3" fill="none" stroke-linecap="round"/>
+          <g stroke="#1a0f04" stroke-width="1.3" fill="none" stroke-linecap="round">
+            <path d="M12.4 14.2 7.6 12M12.4 16.6 7 16.6M12.4 19 7.6 21.4"/>
+            <path d="M19.6 14.2 24.4 12M19.6 16.6 25 16.6M19.6 19 24.4 21.4"/>
+          </g>
+        </svg>
+      </div>
+      <h1>개미 사육 관리</h1>
+    </div>
+    <nav class="nav">
+      <button class="nav-btn active" data-tab="ants">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="6" r="2.3"/><circle cx="12" cy="12.5" r="3.4"/><path d="M12 15.9v4.6M8 18l-3 2M16 18l3 2M9 12.5H5M15 12.5h4M9.5 9.5 7 7.5M14.5 9.5 17 7.5"/></svg>
+        <span class="label">개미 관리</span>
+      </button>
+      <button class="nav-btn" data-tab="history">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 8v4l3 2"/></svg>
+        <span class="label">이력</span>
+      </button>
+      <button class="nav-btn" data-tab="dict">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15.5A2.5 2.5 0 0 1 17.5 21H6.5A2.5 2.5 0 0 1 4 18.5v-13Z"/><path d="M8 3v18M8 3h9.5A2.5 2.5 0 0 1 20 5.5"/></svg>
+        <span class="label">사전</span>
+      </button>
+      <button class="nav-btn" data-tab="settings">
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.04 1.56V21a2 2 0 0 1-4 0v-.09A1.7 1.7 0 0 0 9 19.35a1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.65 15a1.7 1.7 0 0 0-1.56-1.04H3a2 2 0 0 1 0-4h.09A1.7 1.7 0 0 0 4.65 9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.7 1.7 0 0 0 9 4.65a1.7 1.7 0 0 0 1.04-1.56V3a2 2 0 0 1 4 0v.09A1.7 1.7 0 0 0 15 4.65a1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.7 1.7 0 0 0 19.35 9a1.7 1.7 0 0 0 1.56 1.04H21a2 2 0 0 1 0 4h-.09A1.7 1.7 0 0 0 19.4 15Z"/></svg>
+        <span class="label">설정</span>
+      </button>
+    </nav>
+  </aside>
+
+  <main class="main">
+    <div class="storage-banner" id="storageBanner">
+      <span>⚠</span>
+      <div id="storageBannerText">
+        <b>로컬 저장소를 사용할 수 없습니다.</b><br>
+        이 상태에서는 등록한 정보가 저장되지 않습니다. 크롬(Chrome) 최신 버전에서 열어보시거나, 시크릿/프라이빗 모드가 아닌 창에서 열어주세요.
+      </div>
+      <button class="close" id="btnCloseStorageBanner">&times;</button>
+    </div>
+
+    <!-- ANTS TAB -->
+    <section id="tab-ants" class="tab-panel">
+      <div class="page-head">
+        <div>
+          <h2>개미 관리</h2>
+          <p>보유 중인 개체를 등록하고 먹이 급여 상태를 확인하세요.</p>
+        </div>
+        <div class="page-actions">
+          <button class="btn btn-primary" id="btnAddAnt">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
+            개체 등록
+          </button>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <input class="input search-input" id="antSearch" type="search" placeholder="품종 또는 특이사항 검색…">
+        <div class="chip-group" id="antFilterChips">
+          <button class="chip active" data-filter="all">전체</button>
+          <button class="chip" data-filter="due">급여 필요</button>
+          <button class="chip" data-filter="fasting">금식 중</button>
+        </div>
+      </div>
+
+      <div id="antGrid" class="grid-ants"></div>
+    </section>
+
+    <!-- HISTORY TAB -->
+    <section id="tab-history" class="tab-panel" style="display:none;">
+      <div class="page-head">
+        <div>
+          <h2>구입 · 판매 이력</h2>
+          <p>날짜순으로 정리된 거래 내역입니다. 항목을 클릭하면 등록된 정보를 볼 수 있습니다.</p>
+        </div>
+      </div>
+
+      <div class="toolbar" style="align-items:flex-end;">
+        <label class="date-filter-label">조회 시작<input class="input" id="historyStart" type="date"></label>
+        <label class="date-filter-label">조회 종료<input class="input" id="historyEnd" type="date"></label>
+        <button class="btn btn-sm btn-ghost" id="btnHistoryAll">전체 기간</button>
+      </div>
+
+      <div class="summary-row" id="historySummary"></div>
+
+      <div class="table-wrap card">
+        <table>
+          <colgroup>
+            <col style="width:110px;"><col style="width:70px;"><col><col style="width:120px;"><col style="width:150px;">
+          </colgroup>
+          <thead>
+            <tr><th>날짜</th><th>구분</th><th>품종</th><th>금액</th><th>비고</th></tr>
+          </thead>
+          <tbody id="historyBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- DICTIONARY TAB -->
+    <section id="tab-dict" class="tab-panel" style="display:none;">
+      <div class="page-head">
+        <div>
+          <h2>사전</h2>
+          <p>PDF 사전을 업로드하고 키워드가 포함된 페이지만 찾아보세요.</p>
+        </div>
+      </div>
+
+      <div class="dict-layout">
+        <div class="dict-sidebar">
+          <div class="upload-zone" id="dictUploadZone">
+            <strong style="color:var(--text)">+ PDF 사전 업로드</strong>
+            <div style="margin-top:4px;">클릭하여 파일 선택</div>
+          </div>
+          <input type="file" id="dictFileInput" accept="application/pdf" hidden>
+          <div class="progress-wrap" id="dictProgress">
+            <div class="progress-bar"><div id="dictProgressBar"></div></div>
+            <span id="dictProgressText">0%</span>
+          </div>
+          <div id="dictList" style="display:flex; flex-direction:column; gap:8px; margin-top:6px;"></div>
+        </div>
+
+        <div class="dict-main">
+          <div class="dict-toolbar">
+            <input class="input search-input" id="dictSearch" type="search" placeholder="검색할 키워드를 입력하세요…" disabled>
+            <button class="btn btn-sm" id="btnDownloadAll" disabled>전체저장</button>
+            <button class="btn btn-sm btn-ghost" id="btnDownloadSelected" disabled>선택저장</button>
+          </div>
+          <div id="dictResultInfo" style="font-size:12.5px; color:var(--text-faint); margin-bottom:12px;"></div>
+          <div id="dictResultGrid" class="result-grid"></div>
+          <div style="text-align:center; margin-top:16px;">
+            <button class="btn btn-sm" id="btnLoadMore" style="display:none;">더 보기</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SETTINGS TAB -->
+    <section id="tab-settings" class="tab-panel" style="display:none;">
+      <div class="page-head">
+        <div>
+          <h2>설정</h2>
+          <p>기기를 바꾸기 전에는 꼭 백업 파일을 받아두세요.</p>
+        </div>
+      </div>
+
+      <div class="settings-grid">
+        <div class="card settings-card">
+          <h3>백업 · 복원</h3>
+          <p>개체 정보, 사진, 급여 기록, 사전을 파일 하나(.zip)로 저장하거나 불러옵니다. 휴대폰을 바꾸거나 브라우저를 새로 설치했을 때 이 파일로 데이터를 그대로 옮길 수 있습니다.</p>
+          <div class="settings-actions">
+            <button class="btn btn-primary" id="btnExportBackup">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+              백업 파일 다운로드
+            </button>
+            <button class="btn" id="btnImportBackup">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15V3m0 0L8 7m4-4 4 4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+              백업 파일에서 복원
+            </button>
+          </div>
+          <input type="file" id="backupFileInput" accept=".zip" hidden>
+          <div class="backup-progress" id="backupProgress">
+            <div class="bar"><div id="backupProgressBar"></div></div>
+            <span id="backupProgressText">0%</span>
+          </div>
+          <p class="settings-hint">복원하면 지금 이 기기에 저장된 데이터는 백업 파일 내용으로 모두 대체됩니다.</p>
+        </div>
+
+        <div class="card settings-card">
+          <h3>저장 공간</h3>
+          <p class="storage-note">모든 데이터는 서버로 전송되지 않고 이 브라우저에만 저장됩니다.</p>
+          <strong id="dbSizeInfo" class="storage-size">저장 정보 불러오는 중…</strong>
+        </div>
+
+        <div class="card settings-card danger-card">
+          <h3>전체 데이터 삭제</h3>
+          <p>등록된 모든 개체, 급여 기록, 사전을 삭제하고 처음 상태로 되돌립니다. 삭제 전 백업 파일을 받아두는 것을 권장합니다.</p>
+          <div class="settings-actions">
+            <button class="btn btn-danger" id="btnResetAll">전체 데이터 삭제</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Ant Editor Modal -->
+<div class="overlay hidden" id="antModalOverlay">
+  <div class="modal wide">
+    <div class="modal-head">
+      <h3 id="antModalTitle">개체 등록</h3>
+      <button class="modal-close" data-close>&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-grid">
+        <div class="field full">
+          <label>사진</label>
+          <div class="photo-drop" id="antPhotoDrop">
+            <div class="drop-label">클릭하여 사진 선택 (선택 사항)</div>
+          </div>
+          <input type="file" id="antPhotoInput" accept="image/*" hidden>
+        </div>
+        <div class="field">
+          <label>개미 종류 *</label>
+          <input class="input" id="fSpecies" placeholder="예: 곰개미, 일본왕개미">
+        </div>
+        <div class="field">
+          <label>입수 시기 *</label>
+          <input class="input" id="fAcquired" type="date">
+        </div>
+        <div class="field full">
+          <label>기타 특이사항</label>
+          <textarea class="input" id="fNotes" rows="2" placeholder="여왕 유무, 개체수, 특징 등"></textarea>
+        </div>
+        <div class="field">
+          <label>구매 가격 (원)</label>
+          <input class="input" id="fPurchasePrice" type="text" inputmode="numeric" placeholder="0">
+        </div>
+        <div class="field" style="display:flex; align-items:flex-end;">
+          <div class="check-row" style="padding:0;">
+            <input type="checkbox" id="fForSale">
+            <label for="fForSale" style="margin:0; font-weight:600; color:var(--text);">판매 완료</label>
+          </div>
+        </div>
+        <div class="field" style="display:flex; align-items:flex-end;">
+          <div class="check-row" style="padding:0;">
+            <input type="checkbox" id="fFasting">
+            <label for="fFasting" style="margin:0; font-weight:600; color:var(--text);">금식 중 (급여 필요 알림에서 제외)</label>
+          </div>
+        </div>
+        <div class="field" id="fSaleDateWrap" style="display:none;">
+          <label>판매일</label>
+          <input class="input" id="fSaleDate" type="date">
+        </div>
+        <div class="field" id="fSalePriceWrap" style="display:none;">
+          <label>판매 가격 (원)</label>
+          <input class="input" id="fSalePrice" type="text" inputmode="numeric" placeholder="0">
+        </div>
+      </div>
+
+      <div id="careSection" style="display:none; margin-top:22px; padding-top:18px; border-top:1px solid var(--border);">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h4 style="font-size:13.5px; color:var(--text-dim);">먹이 급여 <span class="feed-badge" id="feedPillModal" style="margin-left:6px;">-</span></h4>
+          <button class="btn btn-sm" id="btnLogFeed" style="border-color:var(--accent-amber); color:#f1cfa0;">오늘 밥 줬어요</button>
+        </div>
+        <div class="care-log-list" id="careLogList" style="margin-top:10px;"></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-danger" id="btnDeleteAnt" style="display:none; margin-right:auto;">삭제</button>
+      <button class="btn btn-ghost" data-close>취소</button>
+      <button class="btn btn-primary" id="btnSaveAnt">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- Dictionary page viewer modal -->
+<div class="overlay hidden" id="pageViewerOverlay">
+  <div class="modal">
+    <div class="modal-head">
+      <h3 id="pageViewerTitle">페이지 미리보기</h3>
+      <button class="modal-close" data-close>&times;</button>
+    </div>
+    <div class="modal-body">
+      <img class="viewer-img" id="pageViewerImg" alt="사전 페이지 미리보기">
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-ghost" data-close>닫기</button>
+      <button class="btn btn-primary" id="btnDownloadOne">이미지로 다운로드</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+'use strict';
+/*
+ * 앤트키퍼(AntKeeper) - 개미 사육 관리 로컬 웹앱
+ * - 모든 데이터는 브라우저 IndexedDB에만 저장됩니다 (외부 서버 전송 없음).
+ * - KISA 시큐어코딩 원칙 적용: 모든 외부 입력값(폼 입력, 업로드 파일) 검증,
+ *   출력 시 HTML 이스케이프(XSS 방지), 예외 처리, 자원(Blob URL) 해제.
+ */
+
+/* ============================== 공통 유틸 ============================== */
+
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str).replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+  }[c]));
+}
+
+// 로컬 레코드 식별자 생성 (보안 목적이 아닌 단순 고유키이므로 randomUUID 사용, 미지원 브라우저 대비 폴백)
+function uid() {
+  if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+    return window.crypto.randomUUID();
+  }
+  return 'id-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+}
+
+function todayISO() {
+  const d = new Date();
+  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+  return d.toISOString().slice(0, 10);
+}
+
+function nowISO() {
+  return new Date().toISOString();
+}
+
+// 날짜 문자열(YYYY-MM-DD 등) 유효성 검증 - 외부(사용자) 입력값 검증
+function isValidDateStr(s) {
+  if (typeof s !== 'string' || !s) return false;
+  const d = new Date(s);
+  return !isNaN(d.getTime());
+}
+
+function daysSince(isoTimestamp) {
+  if (!isoTimestamp) return null;
+  const then = new Date(isoTimestamp).getTime();
+  if (isNaN(then)) return null;
+  const diffMs = Date.now() - then;
+  return Math.max(0, Math.floor(diffMs / 86400000));
+}
+
+function fmtDate(isoStr) {
+  if (!isoStr) return '-';
+  const d = new Date(isoStr);
+  if (isNaN(d.getTime())) return '-';
+  return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+}
+
+function currency(n) {
+  const num = Number(n);
+  if (!isFinite(num)) return '0원';
+  return num.toLocaleString('ko-KR') + '원';
+}
+
+// 숫자 입력값 검증(음수/비정상값 차단) - 입력데이터 검증. 천단위 구분기호(,)가 섞여 있어도 처리한다.
+function sanitizeNonNegativeNumber(v) {
+  const cleaned = typeof v === 'string' ? v.replace(/,/g, '') : v;
+  const n = Number(cleaned);
+  if (!isFinite(n) || n < 0) return 0;
+  return Math.round(n);
+}
+
+// 가격 입력창에 입력하는 즉시 천단위 구분기호를 붙여 표시한다. 저장되는 값은 sanitizeNonNegativeNumber에서 콤마를 제거해 처리.
+function formatThousandsInput(el) {
+  const digitsOnly = el.value.replace(/[^0-9]/g, '');
+  const cursorFromEnd = el.value.length - (el.selectionEnd ?? el.value.length);
+  const formatted = digitsOnly ? Number(digitsOnly).toLocaleString('ko-KR') : '';
+  el.value = formatted;
+  const newPos = Math.max(0, formatted.length - cursorFromEnd);
+  try { el.setSelectionRange(newPos, newPos); } catch (e) { /* 일부 브라우저에서 미지원 시 무시 */ }
+}
+
+function setPriceInputValue(el, amount) {
+  const n = sanitizeNonNegativeNumber(amount || 0);
+  el.value = n ? n.toLocaleString('ko-KR') : '';
+}
+
+// 과도하게 긴 문자열 저장 방지(자원 고갈/화면 깨짐 방지)
+function clampText(s, max) {
+  const str = (s ?? '').toString().trim();
+  return str.length > max ? str.slice(0, max) : str;
+}
+
+function toast(msg, type) {
+  const wrap = document.getElementById('toastWrap');
+  const el = document.createElement('div');
+  el.className = 'toast' + (type ? ' ' + type : '');
+  el.textContent = msg;
+  wrap.appendChild(el);
+  setTimeout(() => { el.remove(); }, 3600);
+}
+
+// 활성 Object URL 추적 - 메모리 누수 방지를 위해 사용 후 반드시 해제
+const activeObjectUrls = new Set();
+function trackUrl(url) { activeObjectUrls.add(url); return url; }
+function revokeUrl(url) {
+  if (!url) return;
+  try { URL.revokeObjectURL(url); } catch (e) { /* 이미 해제된 경우 무시 */ }
+  activeObjectUrls.delete(url);
+}
+function revokeAllTracked() {
+  activeObjectUrls.forEach((u) => { try { URL.revokeObjectURL(u); } catch (e) {} });
+  activeObjectUrls.clear();
+}
+window.addEventListener('beforeunload', revokeAllTracked);
+
+/* ============================== IndexedDB 레이어 ============================== */
+
+const DB_NAME = 'AntKeeperDB';
+const DB_VERSION = 1;
+let dbInstance = null;
+
+function openDatabase() {
+  return new Promise((resolve, reject) => {
+    if (!('indexedDB' in window)) {
+      reject(new Error('이 브라우저는 IndexedDB를 지원하지 않습니다.'));
+      return;
+    }
+    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    req.onupgradeneeded = (ev) => {
+      const db = ev.target.result;
+      if (!db.objectStoreNames.contains('ants')) {
+        db.createObjectStore('ants', { keyPath: 'id' });
+      }
+      if (!db.objectStoreNames.contains('careLogs')) {
+        const s = db.createObjectStore('careLogs', { keyPath: 'id' });
+        s.createIndex('antId', 'antId', { unique: false });
+      }
+      if (!db.objectStoreNames.contains('dictionaries')) {
+        db.createObjectStore('dictionaries', { keyPath: 'id' });
+      }
+      if (!db.objectStoreNames.contains('dictPageText')) {
+        const s = db.createObjectStore('dictPageText', { keyPath: 'id' });
+        s.createIndex('dictId', 'dictId', { unique: false });
+      }
+      if (!db.objectStoreNames.contains('dictPageImage')) {
+        db.createObjectStore('dictPageImage', { keyPath: 'id' });
+      }
+    };
+    req.onsuccess = (ev) => resolve(ev.target.result);
+    req.onerror = () => reject(req.error || new Error('데이터베이스를 열 수 없습니다.'));
+    req.onblocked = () => reject(new Error('다른 탭에서 앤트키퍼가 열려 있어 데이터베이스 업그레이드가 차단되었습니다.'));
+  });
+}
+
+function tx(storeNames, mode) {
+  if (!dbInstance) throw new Error('로컬 저장소가 초기화되지 않았습니다.');
+  return dbInstance.transaction(storeNames, mode);
+}
+
+function reqToPromise(req) {
+  return new Promise((resolve, reject) => {
+    req.onsuccess = () => resolve(req.result);
+    req.onerror = () => reject(req.error || new Error('저장소 작업 중 오류가 발생했습니다.'));
+  });
+}
+
+// IndexedDB를 전혀 쓸 수 없는 환경(예: 안드로이드에서 content:// 로 열린 경우)을 위한 메모리 임시 저장소.
+// 새로고침/종료 시 사라지므로, 이 상태에서는 화면에 백업을 자주 받아두라는 안내를 띄운다.
+const memoryStores = {
+  ants: new Map(), careLogs: new Map(), dictionaries: new Map(), dictPageText: new Map(), dictPageImage: new Map(),
+};
+
+async function dbPut(storeName, value) {
+  if (!dbInstance) { memoryStores[storeName].set(value.id, value); return value; }
+  const t = tx([storeName], 'readwrite');
+  const p = reqToPromise(t.objectStore(storeName).put(value));
+  return p;
+}
+async function dbDelete(storeName, key) {
+  if (!dbInstance) { memoryStores[storeName].delete(key); return; }
+  const t = tx([storeName], 'readwrite');
+  return reqToPromise(t.objectStore(storeName).delete(key));
+}
+async function dbGetAll(storeName) {
+  if (!dbInstance) return Array.from(memoryStores[storeName].values());
+  const t = tx([storeName], 'readonly');
+  return reqToPromise(t.objectStore(storeName).getAll());
+}
+async function dbGet(storeName, key) {
+  if (!dbInstance) return memoryStores[storeName].get(key);
+  const t = tx([storeName], 'readonly');
+  return reqToPromise(t.objectStore(storeName).get(key));
+}
+async function dbGetAllByIndex(storeName, indexName, query) {
+  if (!dbInstance) return Array.from(memoryStores[storeName].values()).filter((rec) => rec[indexName] === query);
+  const t = tx([storeName], 'readonly');
+  return reqToPromise(t.objectStore(storeName).index(indexName).getAll(query));
+}
+async function dbClear(storeName) {
+  if (!dbInstance) { memoryStores[storeName].clear(); return; }
+  const t = tx([storeName], 'readwrite');
+  return reqToPromise(t.objectStore(storeName).clear());
+}
+
+/* ============================== 앱 상태 ============================== */
+
+const state = {
+  ants: [],              // 개체 캐시 (그리드/이력 계산용)
+  careLogsCache: {},     // antId -> [] (모달 열람 시 지연 로드)
+  antPhotoUrls: new Map(), // antId -> objectURL (그리드 렌더링용, 재렌더 시 해제)
+  editingAntId: null,
+  pendingPhotoBlob: undefined, // undefined=변경없음, null=삭제, Blob=신규
+  dictionaries: [],
+  pageIndex: [],          // {id, dictId, dictName, pageNum, text} - 검색용 경량 인덱스(이미지 제외)
+  searchResults: [],
+  renderedCount: 0,
+  selectedPageIds: new Set(),
+};
+
+const PAGE_BATCH = 24;
+
+/* ============================== 이미지 리사이즈(개체 사진) ============================== */
+// 성능/저장공간 최적화: 업로드된 사진을 최대 1280px로 축소, JPEG로 재인코딩하여 저장.
+// 부수 효과로 원본 파일의 메타데이터/비정상 데이터가 제거되고 순수 픽셀 데이터만 남음(위험한 파일 업로드 대응).
+function resizeImageFile(file, maxDim = 1280, quality = 0.86) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      try {
+        let { width, height } = img;
+        if (width > maxDim || height > maxDim) {
+          if (width >= height) { height = Math.round(height * (maxDim / width)); width = maxDim; }
+          else { width = Math.round(width * (maxDim / height)); height = maxDim; }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width; canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        canvas.toBlob((blob) => {
+          URL.revokeObjectURL(url); // 원본 임시 URL 즉시 해제
+          if (!blob) { reject(new Error('이미지 처리에 실패했습니다.')); return; }
+          resolve(blob);
+        }, 'image/jpeg', quality);
+      } catch (e) {
+        URL.revokeObjectURL(url);
+        reject(e);
+      }
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('이미지 파일을 읽을 수 없습니다.')); };
+    img.src = url;
+  });
+}
+
+/* ============================== 탭 전환 ============================== */
+
+function initTabs() {
+  document.querySelectorAll('.nav-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.nav-btn').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      const tab = btn.dataset.tab;
+      document.querySelectorAll('.tab-panel').forEach((p) => { p.style.display = 'none'; });
+      document.getElementById('tab-' + tab).style.display = '';
+      if (tab === 'history') { initHistoryDateDefaults(); renderHistory(); }
+      if (tab === 'settings') { updateStorageInfo(); }
+    });
+  });
+}
+
+/* ============================== 개미 관리 ============================== */
+
+async function loadAnts() {
+  try {
+    state.ants = await dbGetAll('ants');
+    state.ants.sort((a, b) => (b.acquiredDate || '').localeCompare(a.acquiredDate || ''));
+  } catch (e) {
+    console.error(e);
+    toast('개체 목록을 불러오지 못했습니다.', 'error');
+    state.ants = [];
+  }
+}
+
+function careStatus(ant) {
+  if (ant.fasting) return { label: '금식 중', cls: 'fasting', days: null };
+  const last = ant.lastFedAt;
+  if (!last) return { label: '기록 없음', cls: 'warn', days: null };
+  const d = daysSince(last);
+  let cls = 'ok';
+  if (d >= 5) cls = 'late'; else if (d >= 2) cls = 'warn';
+  return { label: `D+${d}`, cls, days: d };
+}
+
+function matchesFilter(ant, filter) {
+  if (filter === 'due') return !ant.fasting && careStatus(ant).cls !== 'ok'; // 급여 필요 여부는 밥 기준으로만 판단, 금식 중이면 제외
+  if (filter === 'fasting') return !!ant.fasting;
+  return true;
+}
+
+function renderEmptyAntState(hasAnyKept, keyword, filter) {
+  let title = '보유 중인 개체가 없습니다';
+  let desc = '오른쪽 위 "개체 등록" 버튼으로 첫 개체를 추가해 보세요.';
+  if (hasAnyKept) {
+    if (keyword) {
+      title = '검색 결과가 없습니다';
+      desc = '다른 검색어로 다시 시도해 보세요.';
+    } else if (filter === 'due') {
+      title = '급여가 필요한 개체가 없습니다';
+      desc = '모든 개체가 최근에 급여를 받았어요.';
+    } else if (filter === 'fasting') {
+      title = '금식 중인 개체가 없습니다';
+      desc = '금식으로 체크된 개체가 없습니다.';
+    }
+  }
+  return `<div class="empty" style="grid-column:1/-1;"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(desc)}</p></div>`;
+}
+
+function renderAntGrid() {
+  const grid = document.getElementById('antGrid');
+  const keyword = (document.getElementById('antSearch').value || '').trim().toLowerCase();
+  const activeChip = document.querySelector('#antFilterChips .chip.active');
+  const filter = activeChip ? activeChip.dataset.filter : 'all';
+
+  // 이전 렌더링에서 생성된 photo objectURL 해제 (메모리 누수 방지)
+  state.antPhotoUrls.forEach((url) => revokeUrl(url));
+  state.antPhotoUrls.clear();
+
+  // 판매완료 개체는 이력 탭에서 다루므로 이 탭에는 보유 중인 개체만 표시
+  const kept = state.ants.filter((ant) => !ant.forSale);
+  const list = kept.filter((ant) => {
+    if (!matchesFilter(ant, filter)) return false;
+    if (!keyword) return true;
+    const hay = `${ant.species || ''} ${ant.notes || ''}`.toLowerCase();
+    return hay.includes(keyword);
+  });
+
+  if (list.length === 0) {
+    grid.innerHTML = renderEmptyAntState(kept.length > 0, keyword, filter);
+    return;
+  }
+
+  grid.innerHTML = '';
+  const frag = document.createDocumentFragment();
+  list.forEach((ant) => {
+    const feed = careStatus(ant);
+    const card = document.createElement('div');
+    card.className = 'card ant-card';
+    card.dataset.id = ant.id;
+
+    if (ant.photoBlob) {
+      const toggleRow = document.createElement('div');
+      toggleRow.className = 'photo-toggle-row';
+      toggleRow.innerHTML = `<span>사진 보기</span><span class="chev">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M6 9l6 6 6-6"/></svg>
+      </span>`;
+      const photoWrap = document.createElement('div');
+      photoWrap.className = 'ant-photo';
+      photoWrap.style.display = 'none';
+      const url = trackUrl(URL.createObjectURL(ant.photoBlob));
+      state.antPhotoUrls.set(ant.id, url);
+      const img = document.createElement('img');
+      img.src = url;
+      img.alt = escapeHtml(ant.species || '개미 사진');
+      photoWrap.appendChild(img);
+
+      toggleRow.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = photoWrap.style.display !== 'none';
+        photoWrap.style.display = isOpen ? 'none' : 'flex';
+        toggleRow.classList.toggle('open', !isOpen);
+        toggleRow.querySelector('span').textContent = isOpen ? '사진 보기' : '사진 접기';
+      });
+      card.appendChild(toggleRow);
+      card.appendChild(photoWrap);
+    }
+
+    const body = document.createElement('div');
+    body.className = 'ant-body';
+    const metaText = `${fmtDate(ant.acquiredDate)}${ant.notes ? ' · ' + ant.notes : ''}`;
+    body.innerHTML = `
+      <div class="ant-row-top">
+        <h3>${escapeHtml(ant.species || '이름없음')}${ant.fasting ? '<span class="fasting-badge">금식</span>' : ''}</h3>
+        <span class="feed-badge ${feed.cls}">${escapeHtml(feed.label)}</span>
+      </div>
+      <div class="ant-row-bottom">
+        <span class="meta" title="${escapeHtml(metaText)}">${escapeHtml(metaText)}</span>
+        <span class="price">${currency(ant.purchasePrice || 0)}</span>
+      </div>
+    `;
+    card.appendChild(body);
+    card.addEventListener('click', () => openAntModal(ant.id));
+    frag.appendChild(card);
+  });
+  grid.appendChild(frag);
+}
+
+function setFeedBadge(el, feed) {
+  if (!el) return;
+  el.textContent = feed.label;
+  el.className = 'feed-badge ' + feed.cls;
+}
+
+function toggleSaleFields() {
+  const on = document.getElementById('fForSale').checked;
+  document.getElementById('fSaleDateWrap').style.display = on ? '' : 'none';
+  document.getElementById('fSalePriceWrap').style.display = on ? '' : 'none';
+}
+
+function toggleFastingUI() {
+  const on = document.getElementById('fFasting').checked;
+  const btn = document.getElementById('btnLogFeed');
+  if (btn) btn.disabled = on;
+}
+
+async function openAntModal(antId) {
+  state.editingAntId = antId || null;
+  state.pendingPhotoBlob = undefined;
+  const overlay = document.getElementById('antModalOverlay');
+  const title = document.getElementById('antModalTitle');
+  const photoDrop = document.getElementById('antPhotoDrop');
+  photoDrop.innerHTML = '<div class="drop-label">클릭하여 사진 선택 (선택 사항)</div>';
+
+  document.getElementById('fSpecies').value = '';
+  document.getElementById('fAcquired').value = todayISO();
+  document.getElementById('fNotes').value = '';
+  document.getElementById('fPurchasePrice').value = '';
+  document.getElementById('fForSale').checked = false;
+  document.getElementById('fFasting').checked = false;
+  document.getElementById('fSaleDate').value = todayISO();
+  document.getElementById('fSalePrice').value = '';
+  document.getElementById('btnDeleteAnt').style.display = 'none';
+  document.getElementById('careSection').style.display = 'none';
+
+  if (antId) {
+    const ant = state.ants.find((a) => a.id === antId);
+    if (!ant) { toast('개체 정보를 찾을 수 없습니다.', 'error'); return; }
+    title.textContent = '개체 정보 수정';
+    document.getElementById('fSpecies').value = ant.species || '';
+    document.getElementById('fAcquired').value = ant.acquiredDate || todayISO();
+    document.getElementById('fNotes').value = ant.notes || '';
+    setPriceInputValue(document.getElementById('fPurchasePrice'), ant.purchasePrice);
+    document.getElementById('fForSale').checked = !!ant.forSale;
+    document.getElementById('fFasting').checked = !!ant.fasting;
+    document.getElementById('fSaleDate').value = ant.saleDate || todayISO();
+    setPriceInputValue(document.getElementById('fSalePrice'), ant.salePrice);
+    if (ant.photoBlob) {
+      const url = trackUrl(URL.createObjectURL(ant.photoBlob));
+      photoDrop.innerHTML = `<img src="${url}" alt=""><div class="drop-label">클릭하여 사진 변경</div>`;
+      photoDrop.dataset.tempUrl = url;
+    }
+    document.getElementById('btnDeleteAnt').style.display = '';
+    document.getElementById('careSection').style.display = '';
+    setFeedBadge(document.getElementById('feedPillModal'), careStatus(ant));
+    await renderCareLogs(antId);
+  } else {
+    title.textContent = '개체 등록';
+  }
+  toggleSaleFields();
+  toggleFastingUI();
+  overlay.classList.remove('hidden');
+}
+
+function closeAntModal() {
+  const photoDrop = document.getElementById('antPhotoDrop');
+  if (photoDrop.dataset.tempUrl) { revokeUrl(photoDrop.dataset.tempUrl); delete photoDrop.dataset.tempUrl; }
+  document.getElementById('antModalOverlay').classList.add('hidden');
+  state.editingAntId = null;
+  state.pendingPhotoBlob = undefined;
+}
+
+async function renderCareLogs(antId) {
+  let logs = state.careLogsCache[antId];
+  if (!logs) {
+    try {
+      logs = await dbGetAllByIndex('careLogs', 'antId', antId);
+    } catch (e) {
+      console.error(e); logs = [];
+    }
+    state.careLogsCache[antId] = logs;
+  }
+  logs = logs.slice().sort((a, b) => b.timestamp.localeCompare(a.timestamp)).slice(0, 30);
+  const list = document.getElementById('careLogList');
+  if (logs.length === 0) {
+    list.innerHTML = `<div style="color:var(--text-faint); font-size:12px; padding:6px 2px;">급여 기록이 없습니다.</div>`;
+    return;
+  }
+  list.innerHTML = '';
+  logs.forEach((log) => {
+    const row = document.createElement('div');
+    row.className = 'care-log-item';
+    const kindLabel = log.type === 'feed' ? '🍯 먹이' : '💧 물';
+    const dt = new Date(log.timestamp);
+    row.innerHTML = `<span>${kindLabel} · ${escapeHtml(dt.toLocaleString('ko-KR'))}</span>`;
+    const delBtn = document.createElement('button');
+    delBtn.className = 'del'; delBtn.textContent = '✕'; delBtn.title = '기록 삭제';
+    delBtn.addEventListener('click', async () => {
+      try {
+        await dbDelete('careLogs', log.id);
+        delete state.careLogsCache[antId];
+        await recomputeAntCareTimestamps(antId);
+        await renderCareLogs(antId);
+        renderAntGrid();
+      } catch (e) { console.error(e); toast('기록 삭제에 실패했습니다.', 'error'); }
+    });
+    row.appendChild(delBtn);
+    list.appendChild(row);
+  });
+}
+
+async function recomputeAntCareTimestamps(antId) {
+  const ant = state.ants.find((a) => a.id === antId);
+  if (!ant) return;
+  let logs;
+  try {
+    logs = await dbGetAllByIndex('careLogs', 'antId', antId);
+  } catch (e) { console.error(e); return; }
+  const feedLogs = logs.filter((l) => l.type === 'feed').sort((a, b) => b.timestamp.localeCompare(a.timestamp));
+  ant.lastFedAt = feedLogs.length ? feedLogs[0].timestamp : null;
+  try { await dbPut('ants', ant); } catch (e) { console.error(e); }
+  setFeedBadge(document.getElementById('feedPillModal'), careStatus(ant));
+}
+
+async function logCare(kind) {
+  const antId = state.editingAntId;
+  if (!antId) return;
+  const log = { id: uid(), antId, type: kind, timestamp: nowISO() };
+  try {
+    await dbPut('careLogs', log);
+    delete state.careLogsCache[antId];
+    await recomputeAntCareTimestamps(antId);
+    await renderCareLogs(antId);
+    renderAntGrid();
+    toast(kind === 'feed' ? '먹이 급여를 기록했습니다.' : '물 급여를 기록했습니다.', 'success');
+  } catch (e) {
+    console.error(e);
+    toast('기록 저장에 실패했습니다.', 'error');
+  }
+}
+
+async function saveAnt() {
+  const species = clampText(document.getElementById('fSpecies').value, 60);
+  const acquiredDate = document.getElementById('fAcquired').value;
+  const notes = clampText(document.getElementById('fNotes').value, 500);
+  const purchasePrice = sanitizeNonNegativeNumber(document.getElementById('fPurchasePrice').value || 0);
+  const forSale = document.getElementById('fForSale').checked;
+  const fasting = document.getElementById('fFasting').checked;
+  const saleDate = document.getElementById('fSaleDate').value;
+  const salePrice = sanitizeNonNegativeNumber(document.getElementById('fSalePrice').value || 0);
+
+  if (!species) { toast('개미 종류를 입력해 주세요.', 'error'); return; }
+  if (!isValidDateStr(acquiredDate)) { toast('입수 시기를 올바르게 입력해 주세요.', 'error'); return; }
+  if (forSale && !isValidDateStr(saleDate)) { toast('판매일을 올바르게 입력해 주세요.', 'error'); return; }
+
+  const isNew = !state.editingAntId;
+  const id = state.editingAntId || uid();
+  const existing = isNew ? {} : (state.ants.find((a) => a.id === id) || {});
+
+  const ant = {
+    ...existing,
+    id,
+    species,
+    acquiredDate,
+    notes,
+    purchasePrice,
+    forSale,
+    fasting,
+    saleDate: forSale ? saleDate : null,
+    salePrice: forSale ? salePrice : 0,
+    lastFedAt: existing.lastFedAt || null,
+    createdAt: existing.createdAt || nowISO(),
+    updatedAt: nowISO(),
+  };
+  delete ant.lastWateredAt;
+
+  if (state.pendingPhotoBlob === null) {
+    ant.photoBlob = null;
+  } else if (state.pendingPhotoBlob instanceof Blob) {
+    ant.photoBlob = state.pendingPhotoBlob;
+  } else {
+    ant.photoBlob = existing.photoBlob || null;
+  }
+
+  try {
+    await dbPut('ants', ant);
+    await loadAnts();
+    renderAntGrid();
+    renderHistory();
+    closeAntModal();
+    toast(isNew ? '개체를 등록했습니다.' : '개체 정보를 수정했습니다.', 'success');
+  } catch (e) {
+    console.error(e);
+    toast('저장에 실패했습니다. 다시 시도해 주세요.', 'error');
+  }
+}
+
+async function deleteAnt() {
+  const antId = state.editingAntId;
+  if (!antId) return;
+  if (!confirm('이 개체와 관련된 급여 기록을 모두 삭제합니다. 계속할까요?')) return;
+  try {
+    await dbDelete('ants', antId);
+    const logs = await dbGetAllByIndex('careLogs', 'antId', antId);
+    for (const log of logs) { await dbDelete('careLogs', log.id); }
+    delete state.careLogsCache[antId];
+    await loadAnts();
+    renderAntGrid();
+    renderHistory();
+    closeAntModal();
+    toast('개체를 삭제했습니다.', 'success');
+  } catch (e) {
+    console.error(e);
+    toast('삭제 중 오류가 발생했습니다.', 'error');
+  }
+}
+
+/* ============================== 이력 탭 ============================== */
+
+function oneMonthAgoISO() {
+  const d = new Date();
+  d.setMonth(d.getMonth() - 1);
+  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+  return d.toISOString().slice(0, 10);
+}
+
+function initHistoryDateDefaults() {
+  const startEl = document.getElementById('historyStart');
+  const endEl = document.getElementById('historyEnd');
+  if (!startEl.value) startEl.value = oneMonthAgoISO();
+  if (!endEl.value) endEl.value = todayISO();
+}
+
+function renderHistory() {
+  const startVal = document.getElementById('historyStart').value;
+  const endVal = document.getElementById('historyEnd').value;
+
+  const events = [];
+  state.ants.forEach((ant) => {
+    events.push({ antId: ant.id, date: ant.acquiredDate, type: 'buy', species: ant.species, amount: ant.purchasePrice || 0 });
+    if (ant.forSale && ant.saleDate) {
+      events.push({
+        antId: ant.id, date: ant.saleDate, type: 'sell', species: ant.species, amount: ant.salePrice || 0,
+        profit: (ant.salePrice || 0) - (ant.purchasePrice || 0),
+      });
+    }
+  });
+
+  const filtered = events.filter((ev) => {
+    if (startVal && (ev.date || '') < startVal) return false;
+    if (endVal && (ev.date || '') > endVal) return false;
+    return true;
+  });
+  filtered.sort((a, b) => {
+    const dateCmp = (b.date || '').localeCompare(a.date || '');
+    if (dateCmp !== 0) return dateCmp;
+    if (a.type === b.type) return 0;
+    return a.type === 'sell' ? -1 : 1; // 같은 날짜면 판매를 구입보다 위에 표시
+  });
+
+  const totalBuy = filtered.filter((e) => e.type === 'buy').reduce((sum, e) => sum + e.amount, 0);
+  const sellEvents = filtered.filter((e) => e.type === 'sell');
+  const totalSell = sellEvents.reduce((sum, e) => sum + e.amount, 0);
+  const netProfit = sellEvents.reduce((sum, e) => sum + e.profit, 0);
+  const soldAntsTotal = state.ants.filter((a) => a.forSale).length;
+
+  document.getElementById('historySummary').innerHTML = `
+    <div class="card stat-card"><span>현재 보유 개체</span><b>${state.ants.length - soldAntsTotal}마리</b></div>
+    <div class="card stat-card"><span>기간 내 구매 금액</span><b>${currency(totalBuy)}</b></div>
+    <div class="card stat-card"><span>기간 내 판매 금액</span><b>${currency(totalSell)}</b></div>
+    <div class="card stat-card profit"><span>기간 내 판매 순손익</span><b class="${netProfit >= 0 ? 'pos' : 'neg'}">${netProfit >= 0 ? '+' : ''}${currency(netProfit)}</b></div>
+  `;
+
+  const body = document.getElementById('historyBody');
+  body.innerHTML = '';
+  if (filtered.length === 0) {
+    body.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-faint); padding:30px;">조회 기간 내 거래 내역이 없습니다.</td></tr>`;
+    return;
+  }
+  const frag = document.createDocumentFragment();
+  filtered.forEach((ev) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${fmtDate(ev.date)}</td>
+      <td><span class="tag ${ev.type === 'buy' ? 'buy' : 'sell'}">${ev.type === 'buy' ? '구입' : '판매'}</span></td>
+      <td class="strong" title="${escapeHtml(ev.species || '이름없음')}">${escapeHtml(ev.species || '이름없음')}</td>
+      <td class="strong">${currency(ev.amount)}</td>
+      <td>${ev.type === 'sell' ? `손익 ${ev.profit >= 0 ? '+' : ''}${currency(ev.profit)}` : ''}</td>
+    `;
+    tr.addEventListener('click', () => openAntModal(ev.antId));
+    frag.appendChild(tr);
+  });
+  body.appendChild(frag);
+}
+
+/* ============================== 사전 탭 ============================== */
+
+const canvasToBlob = (canvas, type, quality) => new Promise((resolve, reject) => {
+  canvas.toBlob((blob) => {
+    if (!blob) { reject(new Error('페이지 이미지 생성에 실패했습니다.')); return; }
+    resolve(blob);
+  }, type, quality);
+});
+
+async function loadDictionaries() {
+  try {
+    state.dictionaries = await dbGetAll('dictionaries');
+    state.dictionaries.sort((a, b) => (b.uploadedAt || '').localeCompare(a.uploadedAt || ''));
+  } catch (e) {
+    console.error(e); state.dictionaries = [];
+  }
+}
+
+async function rebuildPageIndex() {
+  // 검색용 경량 인덱스: 이미지 Blob은 제외하고 텍스트만 메모리에 적재(성능/메모리 최적화)
+  try {
+    const all = await dbGetAll('dictPageText');
+    const dictNameById = new Map(state.dictionaries.map((d) => [d.id, d.name]));
+    state.pageIndex = all.map((rec) => ({
+      id: rec.id, dictId: rec.dictId, dictName: dictNameById.get(rec.dictId) || '(삭제됨)',
+      pageNum: rec.pageNum, text: rec.text || '',
+    }));
+  } catch (e) {
+    console.error(e); state.pageIndex = [];
+  }
+}
+
+function renderDictSidebar() {
+  const listEl = document.getElementById('dictList');
+  if (state.dictionaries.length === 0) {
+    listEl.innerHTML = `<div style="color:var(--text-faint); font-size:12px; padding:4px 2px;">업로드된 사전이 없습니다.</div>`;
+    document.getElementById('dictSearch').disabled = true;
+    return;
+  }
+  document.getElementById('dictSearch').disabled = false;
+  listEl.innerHTML = '';
+  state.dictionaries.forEach((d) => {
+    const item = document.createElement('div');
+    item.className = 'dict-item';
+    item.innerHTML = `
+      <div style="min-width:0;">
+        <div class="name">${escapeHtml(d.name)}</div>
+        <div class="meta">${d.pageCount}페이지 · ${fmtDate(d.uploadedAt)}</div>
+      </div>
+      <button class="del" title="삭제">✕</button>
+    `;
+    item.querySelector('.del').addEventListener('click', async (e) => {
+      e.stopPropagation();
+      if (!confirm(`"${d.name}" 사전과 저장된 모든 페이지를 삭제합니다. 계속할까요?`)) return;
+      await deleteDictionary(d.id);
+    });
+    listEl.appendChild(item);
+  });
+}
+
+async function deleteDictionary(dictId) {
+  try {
+    const pageTexts = await dbGetAllByIndex('dictPageText', 'dictId', dictId);
+    for (const p of pageTexts) {
+      await dbDelete('dictPageText', p.id);
+      await dbDelete('dictPageImage', p.id);
+    }
+    await dbDelete('dictionaries', dictId);
+    await loadDictionaries();
+    await rebuildPageIndex();
+    renderDictSidebar();
+    runDictSearch();
+    toast('사전을 삭제했습니다.', 'success');
+  } catch (e) {
+    console.error(e);
+    toast('사전 삭제 중 오류가 발생했습니다.', 'error');
+  }
+}
+
+const MAX_PDF_BYTES = 300 * 1024 * 1024; // 300MB - 과도한 업로드로 인한 자원 고갈 방지
+
+async function handleDictUpload(file) {
+  // 업로드 파일 검증(확장자 + MIME 화이트리스트, 크기 제한) - 위험한 형식 파일 업로드 대응
+  const nameLower = (file.name || '').toLowerCase();
+  const isPdfExt = nameLower.endsWith('.pdf');
+  const isPdfMime = file.type === 'application/pdf' || file.type === '';
+  if (!isPdfExt || !isPdfMime) {
+    toast('PDF 파일만 업로드할 수 있습니다.', 'error');
+    return;
+  }
+  if (file.size > MAX_PDF_BYTES) {
+    toast('파일 용량이 너무 큽니다 (최대 300MB).', 'error');
+    return;
+  }
+  if (typeof window.pdfjsLib === 'undefined') {
+    toast('사전 처리 라이브러리를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.', 'error');
+    return;
+  }
+
+  const progressWrap = document.getElementById('dictProgress');
+  const progressBar = document.getElementById('dictProgressBar');
+  const progressText = document.getElementById('dictProgressText');
+  progressWrap.classList.add('active');
+  progressBar.style.width = '0%';
+  progressText.textContent = '사전 파일 분석 중…';
+
+  const dictId = uid();
+  let pdfDoc = null;
+  try {
+    const arrayBuffer = await file.arrayBuffer();
+    const loadingTask = window.pdfjsLib.getDocument({ data: arrayBuffer });
+    pdfDoc = await loadingTask.promise;
+    const numPages = pdfDoc.numPages;
+
+    for (let pageNum = 1; pageNum <= numPages; pageNum++) {
+      const page = await pdfDoc.getPage(pageNum);
+      try {
+        // 텍스트 추출(검색용)
+        const textContent = await page.getTextContent();
+        const text = textContent.items.map((it) => (it && it.str) ? it.str : '').join(' ').replace(/\s+/g, ' ').trim();
+
+        // 페이지 이미지 렌더링(미리보기/다운로드용) - 폭 약 1100px로 최적화하여 저장공간/속도 균형
+        const baseViewport = page.getViewport({ scale: 1 });
+        const targetWidth = 1100;
+        const scale = Math.min(3, Math.max(0.5, targetWidth / baseViewport.width));
+        const viewport = page.getViewport({ scale });
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.ceil(viewport.width);
+        canvas.height = Math.ceil(viewport.height);
+        const ctx = canvas.getContext('2d');
+        await page.render({ canvasContext: ctx, viewport }).promise;
+        const blob = await canvasToBlob(canvas, 'image/png');
+        // 캔버스 자원 해제(메모리 누수 방지)
+        canvas.width = 0; canvas.height = 0;
+
+        const pageId = `${dictId}_p${pageNum}`;
+        await dbPut('dictPageText', { id: pageId, dictId, pageNum, text: clampText(text, 20000) });
+        await dbPut('dictPageImage', { id: pageId, blob });
+      } finally {
+        page.cleanup(); // pdf.js 페이지 자원 해제
+      }
+
+      const pct = Math.round((pageNum / numPages) * 100);
+      progressBar.style.width = pct + '%';
+      progressText.textContent = `${pageNum} / ${numPages} 페이지 처리 중…`;
+    }
+
+    const dictRecord = {
+      id: dictId,
+      name: clampText(file.name.replace(/\.pdf$/i, ''), 120) || '이름없는 사전',
+      pageCount: numPages,
+      uploadedAt: nowISO(),
+    };
+    await dbPut('dictionaries', dictRecord);
+    await loadDictionaries();
+    await rebuildPageIndex();
+    renderDictSidebar();
+    toast(`"${dictRecord.name}" 사전 업로드가 완료되었습니다. (${numPages}페이지)`, 'success');
+  } catch (e) {
+    console.error(e);
+    // 실패 시 부분 저장된 데이터 정리(자원 정리)
+    try {
+      const partial = await dbGetAllByIndex('dictPageText', 'dictId', dictId);
+      for (const p of partial) { await dbDelete('dictPageText', p.id); await dbDelete('dictPageImage', p.id); }
+      await dbDelete('dictionaries', dictId);
+    } catch (cleanupErr) { console.error(cleanupErr); }
+    toast('PDF 처리 중 오류가 발생했습니다. 파일이 손상되지 않았는지 확인해 주세요.', 'error');
+  } finally {
+    if (pdfDoc && typeof pdfDoc.destroy === 'function') { try { pdfDoc.destroy(); } catch (e) {} }
+    progressWrap.classList.remove('active');
+  }
+}
+
+function buildSnippet(text, keyword) {
+  const lower = text.toLowerCase();
+  const idx = lower.indexOf(keyword.toLowerCase());
+  if (idx === -1) return escapeHtml(text.slice(0, 90));
+  const start = Math.max(0, idx - 40);
+  const end = Math.min(text.length, idx + keyword.length + 40);
+  const before = text.slice(start, idx);
+  const match = text.slice(idx, idx + keyword.length);
+  const after = text.slice(idx + keyword.length, end);
+  return (start > 0 ? '…' : '') + escapeHtml(before) + '<mark>' + escapeHtml(match) + '</mark>' + escapeHtml(after) + (end < text.length ? '…' : '');
+}
+
+function updateSelectedDownloadButton() {
+  const btn = document.getElementById('btnDownloadSelected');
+  const count = state.selectedPageIds.size;
+  btn.disabled = count === 0;
+  btn.textContent = count > 0 ? `선택저장 (${count})` : '선택저장';
+}
+
+function runDictSearch() {
+  const keyword = (document.getElementById('dictSearch').value || '').trim();
+  const resultInfo = document.getElementById('dictResultInfo');
+  const grid = document.getElementById('dictResultGrid');
+  const loadMoreBtn = document.getElementById('btnLoadMore');
+  const downloadAllBtn = document.getElementById('btnDownloadAll');
+
+  // 이전 검색 결과에서 만든 objectURL 전부 해제
+  Array.from(grid.querySelectorAll('img[data-blob-url]')).forEach((img) => revokeUrl(img.src));
+
+  state.selectedPageIds = new Set();
+  updateSelectedDownloadButton();
+
+  if (!keyword) {
+    grid.innerHTML = '';
+    resultInfo.textContent = '';
+    loadMoreBtn.style.display = 'none';
+    downloadAllBtn.disabled = true;
+    state.searchResults = [];
+    return;
+  }
+
+  const kwLower = keyword.toLowerCase();
+  const results = state.pageIndex.filter((p) => p.text.toLowerCase().includes(kwLower))
+    .sort((a, b) => (a.dictName + a.pageNum).localeCompare(b.dictName + b.pageNum));
+
+  state.searchResults = results;
+  state.renderedCount = 0;
+  resultInfo.textContent = `"${keyword}" 검색 결과 ${results.length}건`;
+  downloadAllBtn.disabled = results.length === 0;
+  grid.innerHTML = '';
+  renderNextResultBatch();
+}
+
+async function renderNextResultBatch() {
+  const grid = document.getElementById('dictResultGrid');
+  const loadMoreBtn = document.getElementById('btnLoadMore');
+  const keyword = (document.getElementById('dictSearch').value || '').trim();
+  const batch = state.searchResults.slice(state.renderedCount, state.renderedCount + PAGE_BATCH);
+
+  for (const rec of batch) {
+    const card = document.createElement('div');
+    card.className = 'card page-card';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.className = 'page-select';
+    checkbox.title = '선택';
+    checkbox.checked = state.selectedPageIds.has(rec.id);
+    checkbox.addEventListener('click', (e) => e.stopPropagation());
+    checkbox.addEventListener('change', () => {
+      if (checkbox.checked) state.selectedPageIds.add(rec.id); else state.selectedPageIds.delete(rec.id);
+      card.classList.toggle('selected', checkbox.checked);
+      updateSelectedDownloadButton();
+    });
+    card.appendChild(checkbox);
+
+    const thumb = document.createElement('div');
+    thumb.className = 'page-thumb';
+    thumb.innerHTML = `<div style="color:var(--text-faint); font-size:11px;">불러오는 중…</div>`;
+    card.appendChild(thumb);
+    const meta = document.createElement('div');
+    meta.className = 'page-meta';
+    meta.innerHTML = `
+      <div class="p-no">${rec.pageNum}페이지</div>
+      <div class="p-dict">${escapeHtml(rec.dictName)}</div>
+      <div class="snippet">${buildSnippet(rec.text, keyword)}</div>
+    `;
+    card.appendChild(meta);
+    card.addEventListener('click', () => openPageViewer(rec));
+    grid.appendChild(card);
+
+    // 이미지 지연 로딩(뷰포트 진입 시점이 아니라 배치 단위로 즉시 로드하되, 순차 처리로 부하 분산)
+    try {
+      const imgRec = await dbGet('dictPageImage', rec.id);
+      if (imgRec && imgRec.blob) {
+        const url = trackUrl(URL.createObjectURL(imgRec.blob));
+        thumb.innerHTML = '';
+        const img = document.createElement('img');
+        img.src = url;
+        img.dataset.blobUrl = '1';
+        img.alt = `${rec.dictName} ${rec.pageNum}페이지`;
+        thumb.appendChild(img);
+      } else {
+        thumb.innerHTML = `<div style="color:var(--text-faint); font-size:11px;">이미지 없음</div>`;
+      }
+    } catch (e) {
+      console.error(e);
+      thumb.innerHTML = `<div style="color:var(--text-faint); font-size:11px;">불러오기 실패</div>`;
+    }
+  }
+
+  state.renderedCount += batch.length;
+  loadMoreBtn.style.display = state.renderedCount < state.searchResults.length ? '' : 'none';
+}
+
+let viewerCurrentRec = null;
+async function openPageViewer(rec) {
+  viewerCurrentRec = rec;
+  document.getElementById('pageViewerTitle').textContent = `${rec.dictName} · ${rec.pageNum}페이지`;
+  const imgEl = document.getElementById('pageViewerImg');
+  if (imgEl.dataset.blobUrl) revokeUrl(imgEl.src);
+  try {
+    const imgRec = await dbGet('dictPageImage', rec.id);
+    if (imgRec && imgRec.blob) {
+      const url = trackUrl(URL.createObjectURL(imgRec.blob));
+      imgEl.src = url;
+      imgEl.dataset.blobUrl = '1';
+    }
+  } catch (e) {
+    console.error(e);
+    toast('이미지를 불러오지 못했습니다.', 'error');
+  }
+  document.getElementById('pageViewerOverlay').classList.remove('hidden');
+}
+
+function closePageViewer() {
+  const imgEl = document.getElementById('pageViewerImg');
+  if (imgEl.dataset.blobUrl) { revokeUrl(imgEl.src); delete imgEl.dataset.blobUrl; imgEl.src=''; }
+  document.getElementById('pageViewerOverlay').classList.add('hidden');
+  viewerCurrentRec = null;
+}
+
+function triggerBlobDownload(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000); // 다운로드 완료 후 자원 해제
+}
+
+function safeFileNamePart(s) {
+  return String(s || '').replace(/[\\/:*?"<>|]/g, '_').slice(0, 60);
+}
+
+async function downloadCurrentPage() {
+  if (!viewerCurrentRec) return;
+  try {
+    const imgRec = await dbGet('dictPageImage', viewerCurrentRec.id);
+    if (!imgRec || !imgRec.blob) { toast('이미지를 찾을 수 없습니다.', 'error'); return; }
+    const fname = `${safeFileNamePart(viewerCurrentRec.dictName)}_p${viewerCurrentRec.pageNum}.png`;
+    triggerBlobDownload(imgRec.blob, fname);
+  } catch (e) {
+    console.error(e);
+    toast('다운로드 중 오류가 발생했습니다.', 'error');
+  }
+}
+
+function uniqueResultFileName(usedNames, rec) {
+  const base = `${safeFileNamePart(rec.dictName)}_p${String(rec.pageNum).padStart(4, '0')}`;
+  let fname = base + '.png';
+  let dupIdx = 1;
+  while (usedNames.has(fname)) { fname = `${base}_${dupIdx++}.png`; }
+  usedNames.add(fname);
+  return fname;
+}
+
+// 폴더를 직접 선택해 이미지 파일을 그대로 저장(zip 압축 해제가 필요 없음).
+// 크롬/엣지 등 File System Access API 지원 브라우저에서만 가능.
+async function saveRecordsToFolder(records, btn) {
+  const total = records.length;
+  let dirHandle;
+  try {
+    dirHandle = await window.showDirectoryPicker({ mode: 'readwrite' });
+  } catch (e) {
+    if (e && e.name === 'AbortError') return; // 사용자가 폴더 선택을 취소함
+    console.error(e);
+    toast('폴더에 접근할 수 없어 압축 파일로 대신 저장합니다.', 'error');
+    await saveRecordsAsZip(records, btn);
+    return;
+  }
+
+  const originalLabel = btn.textContent;
+  btn.disabled = true;
+  const usedNames = new Set();
+  let done = 0;
+  try {
+    for (const rec of records) {
+      const imgRec = await dbGet('dictPageImage', rec.id);
+      if (imgRec && imgRec.blob) {
+        const fname = uniqueResultFileName(usedNames, rec);
+        const fileHandle = await dirHandle.getFileHandle(fname, { create: true });
+        const writable = await fileHandle.createWritable();
+        try {
+          await writable.write(imgRec.blob);
+        } finally {
+          await writable.close(); // 파일 핸들 자원 반드시 해제
+        }
+      }
+      done++;
+      btn.textContent = `저장 중… (${done}/${total})`;
+    }
+    toast(`선택한 폴더에 이미지 ${total}장을 저장했습니다.`, 'success');
+  } catch (e) {
+    console.error(e);
+    toast('이미지 저장 중 오류가 발생했습니다.', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalLabel;
+  }
+}
+
+// 폴더 선택 API를 지원하지 않는 브라우저(사파리/파이어폭스 등)를 위한 대체 경로.
+// 여러 파일을 개별적으로 다운로드하면 브라우저가 자동 차단하는 경우가 많아, 압축파일 하나로 저장한다.
+async function saveRecordsAsZip(records, btn) {
+  const total = records.length;
+  if (typeof window.JSZip === 'undefined') {
+    toast('압축 라이브러리를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.', 'error');
+    return;
+  }
+  const originalLabel = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = '압축 파일 생성 중…';
+  try {
+    const zip = new window.JSZip();
+    const usedNames = new Set();
+    for (const rec of records) {
+      const imgRec = await dbGet('dictPageImage', rec.id);
+      if (imgRec && imgRec.blob) {
+        zip.file(uniqueResultFileName(usedNames, rec), imgRec.blob);
+      }
+    }
+    const content = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE', compressionOptions: { level: 6 } });
+    const keyword = safeFileNamePart((document.getElementById('dictSearch').value || '').trim()) || 'result';
+    triggerBlobDownload(content, `사전검색_${keyword}.zip`);
+    toast(`이미지 ${total}장을 압축 파일로 다운로드했습니다.`, 'success');
+  } catch (e) {
+    console.error(e);
+    toast('압축 파일 생성 중 오류가 발생했습니다.', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalLabel;
+  }
+}
+
+async function saveRecords(records, btn) {
+  if (records.length === 0) return;
+  if (typeof window.showDirectoryPicker === 'function') {
+    await saveRecordsToFolder(records, btn);
+  } else {
+    await saveRecordsAsZip(records, btn);
+  }
+}
+
+async function downloadAllResults() {
+  await saveRecords(state.searchResults, document.getElementById('btnDownloadAll'));
+}
+
+async function downloadSelectedResults() {
+  const selected = state.searchResults.filter((rec) => state.selectedPageIds.has(rec.id));
+  await saveRecords(selected, document.getElementById('btnDownloadSelected'));
+  updateSelectedDownloadButton();
+}
+
+/* ============================== 백업 다운로드 / 복원 ============================== */
+// 백업 파일 형식: .zip (manifest.json + photos/*.jpg + pages/*.png)
+// - JSON 하나로 전부 담지 않고 zip으로 나눈 이유: 이미지를 base64로 바꾸면 용량이 약 33% 커지고
+//   문자열 처리 비용이 커서, 사진/사전 이미지가 많은 경우(수십MB~수백MB) 성능이 크게 나빠지기 때문.
+
+const BACKUP_VERSION = 1;
+const MAX_BACKUP_BYTES = 800 * 1024 * 1024; // 800MB - 복원 파일 크기 제한(자원 고갈 방지)
+
+function setBackupProgress(pct, text) {
+  const wrap = document.getElementById('backupProgress');
+  const bar = document.getElementById('backupProgressBar');
+  const label = document.getElementById('backupProgressText');
+  wrap.classList.add('active');
+  bar.style.width = Math.max(0, Math.min(100, pct)) + '%';
+  label.textContent = text || `${Math.round(pct)}%`;
+}
+function hideBackupProgress() {
+  document.getElementById('backupProgress').classList.remove('active');
+}
+
+async function exportBackup() {
+  if (typeof window.JSZip === 'undefined') { toast('압축 라이브러리를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.', 'error'); return; }
+
+  const exportBtn = document.getElementById('btnExportBackup');
+  const importBtn = document.getElementById('btnImportBackup');
+  exportBtn.disabled = true; importBtn.disabled = true;
+  setBackupProgress(0, '백업 준비 중…');
+
+  try {
+    const [ants, careLogs, dictionaries, dictPageText] = await Promise.all([
+      dbGetAll('ants'), dbGetAll('careLogs'), dbGetAll('dictionaries'), dbGetAll('dictPageText'),
+    ]);
+
+    const manifest = {
+      version: BACKUP_VERSION,
+      exportedAt: nowISO(),
+      ants: ants.map((a) => ({
+        id: a.id, species: a.species, acquiredDate: a.acquiredDate, notes: a.notes,
+        purchasePrice: a.purchasePrice, forSale: a.forSale, fasting: !!a.fasting, saleDate: a.saleDate, salePrice: a.salePrice,
+        lastFedAt: a.lastFedAt, createdAt: a.createdAt, updatedAt: a.updatedAt,
+        hasPhoto: !!a.photoBlob,
+      })),
+      careLogs: careLogs.map((l) => ({ id: l.id, antId: l.antId, type: l.type, timestamp: l.timestamp })),
+      dictionaries: dictionaries.map((d) => ({ id: d.id, name: d.name, pageCount: d.pageCount, uploadedAt: d.uploadedAt })),
+      dictPageText: dictPageText.map((p) => ({ id: p.id, dictId: p.dictId, pageNum: p.pageNum, text: p.text })),
+    };
+
+    const zip = new window.JSZip();
+    zip.file('manifest.json', JSON.stringify(manifest));
+    const photosFolder = zip.folder('photos');
+    const pagesFolder = zip.folder('pages');
+
+    const total = ants.filter((a) => a.photoBlob).length + dictPageText.length;
+    let done = 0;
+    setBackupProgress(0, '사진 정리 중…');
+    for (const a of ants) {
+      if (a.photoBlob) {
+        photosFolder.file(`${a.id}.jpg`, a.photoBlob);
+        done++; setBackupProgress(total ? (done / total) * 70 : 70, '사진 정리 중…');
+      }
+    }
+    setBackupProgress(done && total ? (done / total) * 70 : 0, '사전 페이지 정리 중…');
+    for (const p of dictPageText) {
+      const imgRec = await dbGet('dictPageImage', p.id);
+      if (imgRec && imgRec.blob) pagesFolder.file(`${p.id}.png`, imgRec.blob);
+      done++; setBackupProgress(total ? (done / total) * 70 : 70, '사전 페이지 정리 중…');
+    }
+
+    setBackupProgress(75, '압축 파일 생성 중…');
+    const content = await zip.generateAsync(
+      { type: 'blob', compression: 'DEFLATE', compressionOptions: { level: 6 } },
+      (meta) => setBackupProgress(75 + meta.percent * 0.25, '압축 파일 생성 중…'),
+    );
+    setBackupProgress(100, '다운로드 시작…');
+    triggerBlobDownload(content, `개미사육관리_백업_${todayISO()}.zip`);
+    toast('백업 파일을 다운로드했습니다.', 'success');
+  } catch (e) {
+    console.error(e);
+    toast('백업 생성 중 오류가 발생했습니다.', 'error');
+  } finally {
+    exportBtn.disabled = false; importBtn.disabled = false;
+    setTimeout(hideBackupProgress, 600);
+  }
+}
+
+async function clearAllStores() {
+  const names = ['ants', 'careLogs', 'dictionaries', 'dictPageText', 'dictPageImage'];
+  for (const n of names) { await dbClear(n); }
+}
+
+async function resetAllData() {
+  if (!confirm('개체, 급여기록, 사전을 포함한 모든 데이터를 삭제합니다.\n이 작업은 되돌릴 수 없습니다. 계속할까요?')) return;
+  if (!confirm('마지막 확인입니다. 정말로 전체 데이터를 삭제할까요?')) return;
+  try {
+    await clearAllStores();
+    state.careLogsCache = {};
+    await loadAnts();
+    renderAntGrid();
+    await loadDictionaries();
+    await rebuildPageIndex();
+    renderDictSidebar();
+    document.getElementById('dictSearch').value = '';
+    runDictSearch();
+    document.getElementById('historyStart').value = '';
+    document.getElementById('historyEnd').value = '';
+    initHistoryDateDefaults();
+    renderHistory();
+    updateStorageInfo();
+    toast('모든 데이터를 삭제했습니다.', 'success');
+  } catch (e) {
+    console.error(e);
+    toast('삭제 중 오류가 발생했습니다.', 'error');
+  }
+}
+
+async function importBackup(file) {
+  if (typeof window.JSZip === 'undefined') { toast('압축 라이브러리를 불러오지 못했습니다. 인터넷 연결을 확인해 주세요.', 'error'); return; }
+  if (!file.name.toLowerCase().endsWith('.zip')) { toast('.zip 형식의 백업 파일만 복원할 수 있습니다.', 'error'); return; }
+  if (file.size > MAX_BACKUP_BYTES) { toast('백업 파일 용량이 너무 큽니다.', 'error'); return; }
+  if (!confirm('복원하면 현재 저장된 모든 데이터가 백업 파일 내용으로 대체됩니다.\n계속할까요?')) return;
+
+  const exportBtn = document.getElementById('btnExportBackup');
+  const importBtn = document.getElementById('btnImportBackup');
+  exportBtn.disabled = true; importBtn.disabled = true;
+  setBackupProgress(0, '백업 파일 확인 중…');
+
+  try {
+    const zip = await window.JSZip.loadAsync(file);
+    const manifestFile = zip.file('manifest.json');
+    if (!manifestFile) throw new Error('올바른 백업 파일이 아닙니다 (manifest.json 없음).');
+    const manifestStr = await manifestFile.async('string');
+    let manifest;
+    try { manifest = JSON.parse(manifestStr); } catch (e) { throw new Error('백업 파일 내용을 읽을 수 없습니다.'); }
+    if (!manifest || typeof manifest !== 'object' || manifest.version !== BACKUP_VERSION || !Array.isArray(manifest.ants)) {
+      throw new Error('지원하지 않는 백업 파일 형식입니다.');
+    }
+
+    setBackupProgress(5, '기존 데이터 정리 중…');
+    await clearAllStores();
+
+    const antList = manifest.ants.filter((a) => a && typeof a.id === 'string');
+    const pageList = Array.isArray(manifest.dictPageText) ? manifest.dictPageText.filter((p) => p && typeof p.id === 'string') : [];
+    const total = antList.length + pageList.length || 1;
+    let done = 0;
+
+    for (const a of antList) {
+      const ant = {
+        id: a.id,
+        species: clampText(a.species, 60),
+        acquiredDate: isValidDateStr(a.acquiredDate) ? a.acquiredDate : todayISO(),
+        notes: clampText(a.notes, 500),
+        purchasePrice: sanitizeNonNegativeNumber(a.purchasePrice || 0),
+        forSale: !!a.forSale,
+        fasting: !!a.fasting,
+        saleDate: a.forSale && isValidDateStr(a.saleDate) ? a.saleDate : null,
+        salePrice: a.forSale ? sanitizeNonNegativeNumber(a.salePrice || 0) : 0,
+        lastFedAt: a.lastFedAt || null,
+        createdAt: a.createdAt || nowISO(),
+        updatedAt: nowISO(),
+        photoBlob: null,
+      };
+      if (a.hasPhoto) {
+        const pf = zip.file(`photos/${a.id}.jpg`);
+        if (pf) ant.photoBlob = await pf.async('blob');
+      }
+      await dbPut('ants', ant);
+      done++; setBackupProgress((done / total) * 90, '개체 정보 복원 중…');
+    }
+
+    if (Array.isArray(manifest.careLogs)) {
+      for (const l of manifest.careLogs) {
+        if (!l || typeof l.id !== 'string' || typeof l.antId !== 'string') continue;
+        if (l.type !== 'feed' && l.type !== 'water') continue;
+        await dbPut('careLogs', { id: l.id, antId: l.antId, type: l.type, timestamp: l.timestamp || nowISO() });
+      }
+    }
+    if (Array.isArray(manifest.dictionaries)) {
+      for (const d of manifest.dictionaries) {
+        if (!d || typeof d.id !== 'string') continue;
+        await dbPut('dictionaries', {
+          id: d.id, name: clampText(d.name, 120) || '이름없는 사전',
+          pageCount: sanitizeNonNegativeNumber(d.pageCount || 0), uploadedAt: d.uploadedAt || nowISO(),
+        });
+      }
+    }
+    for (const p of pageList) {
+      await dbPut('dictPageText', { id: p.id, dictId: p.dictId, pageNum: sanitizeNonNegativeNumber(p.pageNum || 0), text: clampText(p.text, 20000) });
+      const pf = zip.file(`pages/${p.id}.png`);
+      if (pf) {
+        const blob = await pf.async('blob');
+        await dbPut('dictPageImage', { id: p.id, blob });
+      }
+      done++; setBackupProgress((done / total) * 90, '사전 페이지 복원 중…');
+    }
+
+    setBackupProgress(95, '화면 갱신 중…');
+    await loadAnts();
+    renderAntGrid();
+    await loadDictionaries();
+    await rebuildPageIndex();
+    renderDictSidebar();
+    document.getElementById('dictSearch').value = '';
+    runDictSearch();
+    updateStorageInfo();
+    setBackupProgress(100, '완료');
+    toast('백업 데이터를 복원했습니다.', 'success');
+  } catch (e) {
+    console.error(e);
+    toast('복원 중 오류가 발생했습니다: ' + e.message, 'error');
+  } finally {
+    exportBtn.disabled = false; importBtn.disabled = false;
+    setTimeout(hideBackupProgress, 600);
+  }
+}
+
+/* ============================== 저장 용량 정보 ============================== */
+
+async function updateStorageInfo() {
+  const el = document.getElementById('dbSizeInfo');
+  try {
+    if (navigator.storage && navigator.storage.estimate) {
+      const est = await navigator.storage.estimate();
+      const usedMb = ((est.usage || 0) / (1024 * 1024)).toFixed(1);
+      el.textContent = `사용 중: 약 ${usedMb}MB`;
+    } else {
+      el.textContent = '';
+    }
+  } catch (e) {
+    el.textContent = '';
+  }
+}
+
+/* ============================== 이벤트 바인딩 & 초기화 ============================== */
+
+function bindEvents() {
+  initTabs();
+
+  document.getElementById('btnAddAnt').addEventListener('click', () => openAntModal(null));
+  document.querySelectorAll('#antModalOverlay [data-close]').forEach((el) => el.addEventListener('click', closeAntModal));
+  document.getElementById('antModalOverlay').addEventListener('click', (e) => { if (e.target.id === 'antModalOverlay') closeAntModal(); });
+  document.getElementById('btnSaveAnt').addEventListener('click', saveAnt);
+  document.getElementById('btnDeleteAnt').addEventListener('click', deleteAnt);
+  document.getElementById('fForSale').addEventListener('change', toggleSaleFields);
+  document.getElementById('fPurchasePrice').addEventListener('input', (e) => formatThousandsInput(e.target));
+  document.getElementById('fSalePrice').addEventListener('input', (e) => formatThousandsInput(e.target));
+  document.getElementById('fFasting').addEventListener('change', toggleFastingUI);
+  document.getElementById('btnLogFeed').addEventListener('click', () => logCare('feed'));
+
+  document.getElementById('antPhotoDrop').addEventListener('click', () => document.getElementById('antPhotoInput').click());
+  document.getElementById('antPhotoInput').addEventListener('change', async (e) => {
+    const file = e.target.files && e.target.files[0];
+    e.target.value = '';
+    if (!file) return;
+    if (!file.type.startsWith('image/')) { toast('이미지 파일만 선택할 수 있습니다.', 'error'); return; }
+    if (file.size > 25 * 1024 * 1024) { toast('이미지 용량이 너무 큽니다 (최대 25MB).', 'error'); return; }
+    try {
+      const resized = await resizeImageFile(file);
+      state.pendingPhotoBlob = resized;
+      const dropEl = document.getElementById('antPhotoDrop');
+      if (dropEl.dataset.tempUrl) revokeUrl(dropEl.dataset.tempUrl);
+      const url = trackUrl(URL.createObjectURL(resized));
+      dropEl.innerHTML = `<img src="${url}" alt=""><div class="drop-label">클릭하여 사진 변경</div>`;
+      dropEl.dataset.tempUrl = url;
+    } catch (err) {
+      console.error(err);
+      toast('이미지를 처리하지 못했습니다.', 'error');
+    }
+  });
+
+  document.getElementById('antSearch').addEventListener('input', debounce(renderAntGrid, 150));
+  document.querySelectorAll('#antFilterChips .chip').forEach((chip) => {
+    chip.addEventListener('click', () => {
+      document.querySelectorAll('#antFilterChips .chip').forEach((c) => c.classList.remove('active'));
+      chip.classList.add('active');
+      renderAntGrid();
+    });
+  });
+
+  document.getElementById('historyStart').addEventListener('change', renderHistory);
+  document.getElementById('historyEnd').addEventListener('change', renderHistory);
+  document.getElementById('btnHistoryAll').addEventListener('click', () => {
+    document.getElementById('historyStart').value = '';
+    document.getElementById('historyEnd').value = '';
+    renderHistory();
+  });
+
+  // 사전 탭
+  document.getElementById('dictUploadZone').addEventListener('click', () => document.getElementById('dictFileInput').click());
+  document.getElementById('dictFileInput').addEventListener('change', (e) => {
+    const file = e.target.files && e.target.files[0];
+    e.target.value = '';
+    if (file) handleDictUpload(file);
+  });
+  document.getElementById('dictSearch').addEventListener('input', debounce(runDictSearch, 200));
+  document.getElementById('btnLoadMore').addEventListener('click', renderNextResultBatch);
+  document.getElementById('btnDownloadAll').addEventListener('click', downloadAllResults);
+  document.getElementById('btnDownloadSelected').addEventListener('click', downloadSelectedResults);
+
+  document.querySelectorAll('#pageViewerOverlay [data-close]').forEach((el) => el.addEventListener('click', closePageViewer));
+  document.getElementById('pageViewerOverlay').addEventListener('click', (e) => { if (e.target.id === 'pageViewerOverlay') closePageViewer(); });
+  document.getElementById('btnDownloadOne').addEventListener('click', downloadCurrentPage);
+
+  // 백업 다운로드 / 복원
+  document.getElementById('btnExportBackup').addEventListener('click', exportBackup);
+  document.getElementById('btnImportBackup').addEventListener('click', () => document.getElementById('backupFileInput').click());
+  document.getElementById('backupFileInput').addEventListener('change', (e) => {
+    const file = e.target.files && e.target.files[0];
+    e.target.value = '';
+    if (file) importBackup(file);
+  });
+  document.getElementById('btnCloseStorageBanner').addEventListener('click', () => {
+    document.getElementById('storageBanner').classList.remove('show');
+  });
+  document.getElementById('btnResetAll').addEventListener('click', resetAllData);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (!document.getElementById('antModalOverlay').classList.contains('hidden')) closeAntModal();
+      if (!document.getElementById('pageViewerOverlay').classList.contains('hidden')) closePageViewer();
+    }
+  });
+}
+
+function debounce(fn, wait) {
+  let t = null;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), wait);
+  };
+}
+
+function showStorageBanner() {
+  const textEl = document.getElementById('storageBannerText');
+  if (location.protocol === 'content:') {
+    // 안드로이드에서 "다운로드/파일" 앱으로 다시 열면 매번 새로운 임시 주소(content://)로 열려
+    // 저장 공간이 이전 실행과 연결되지 않는다. Chrome의 다운로드 목록에서 여는 방식이 더 안정적이다.
+    textEl.innerHTML = `
+      <b>지금은 임시 저장 상태입니다.</b><br>
+      이 화면을 닫으면 입력한 내용이 사라집니다. 사용을 마치면 <b>설정 → 백업 다운로드</b>로 꼭 저장해두세요.
+      다음에 열 때는 파일 앱 대신 크롬 앱의 <b>⋮ 메뉴 → 다운로드</b> 목록에서 열면 저장이 유지될 수 있습니다.
+    `;
+  } else {
+    textEl.innerHTML = `
+      <b>지금은 임시 저장 상태입니다.</b><br>
+      이 화면을 닫으면 입력한 내용이 사라집니다. 사용을 마치면 <b>설정 → 백업 다운로드</b>로 꼭 저장해두세요.
+      크롬(Chrome) 최신 버전에서 열거나, 시크릿/프라이빗 모드가 아닌 창에서 열면 정상적으로 계속 저장될 수 있습니다.
+    `;
+  }
+  document.getElementById('storageBanner').classList.add('show');
+}
+
+async function main() {
+  // 버튼/탭 등 UI 이벤트는 저장소 초기화 성공 여부와 무관하게 항상 먼저 연결한다.
+  // (DB 초기화 실패 시에도 화면이 완전히 먹통이 되지 않도록 하기 위함)
+  bindEvents();
+
+  try {
+    dbInstance = await openDatabase();
+  } catch (e) {
+    console.error(e);
+    dbInstance = null;
+    showStorageBanner();
+    toast('임시 저장 모드입니다. 화면을 닫으면 내용이 사라지니 사용 후 백업을 받아두세요.', 'error');
+  }
+
+  await loadAnts();
+  renderAntGrid();
+  await loadDictionaries();
+  await rebuildPageIndex();
+  renderDictSidebar();
+  updateStorageInfo();
+}
+
+document.addEventListener('DOMContentLoaded', main);
+
+// PWA로 호스팅된 경우(https 등 보안 컨텍스트 + manifest.json/sw.js가 같은 폴더에 있는 경우)에만 동작.
+// 로컬 파일로 단독 실행할 때는 등록이 조용히 실패할 뿐 앱 동작에는 영향이 없다.
+if ('serviceWorker' in navigator && location.protocol !== 'file:' && location.protocol !== 'content:') {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => { /* 호스팅 환경이 아니면 무시 */ });
+  });
+}
+
+</script>
+</body>
+</html>
