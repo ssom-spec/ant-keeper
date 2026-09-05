@@ -1561,7 +1561,11 @@ function runDictSearch() {
 
   const kwLower = keyword.toLowerCase();
   const results = state.pageIndex.filter((p) => p.text.toLowerCase().includes(kwLower))
-    .sort((a, b) => (a.dictName + a.pageNum).localeCompare(b.dictName + b.pageNum));
+    .sort((a, b) => {
+      const dictCmp = a.dictName.localeCompare(b.dictName);
+      if (dictCmp !== 0) return dictCmp;
+      return a.pageNum - b.pageNum; // 페이지 번호는 문자열이 아닌 숫자로 비교해야 6, 162, 163 순으로 정렬됨
+    });
 
   state.searchResults = results;
   state.renderedCount = 0;
