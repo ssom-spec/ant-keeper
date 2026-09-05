@@ -1675,26 +1675,26 @@ function safeFileNamePart(s) {
   return String(s || '').replace(/[\\/:*?"<>|]/g, '_').slice(0, 60);
 }
 
+// 다운로드 날짜(YYYYMMDD) 기준으로 "날짜_순번" 형식의 파일명을 만든다.
+function downloadDateStamp() {
+  const d = new Date();
+  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+  return d.toISOString().slice(0, 10).replace(/-/g, '');
+}
+function dateSeqFileName(seq) {
+  return `${downloadDateStamp()}_${seq}.png`;
+}
+
 async function downloadCurrentPage() {
   if (!viewerCurrentRec) return;
   try {
     const imgRec = await dbGet('dictPageImage', viewerCurrentRec.id);
     if (!imgRec || !imgRec.blob) { toast('이미지를 찾을 수 없습니다.', 'error'); return; }
-    const fname = `${safeFileNamePart(viewerCurrentRec.dictName)}_p${viewerCurrentRec.pageNum}.png`;
-    triggerBlobDownload(imgRec.blob, fname);
+    triggerBlobDownload(imgRec.blob, dateSeqFileName(1));
   } catch (e) {
     console.error(e);
     toast('다운로드 중 오류가 발생했습니다.', 'error');
   }
-}
-
-function uniqueResultFileName(usedNames, rec) {
-  const base = `${safeFileNamePart(rec.dictName)}_p${String(rec.pageNum).padStart(4, '0')}`;
-  let fname = base + '.png';
-  let dupIdx = 1;
-  while (usedNames.has(fname)) { fname = `${base}_${dupIdx++}.png`; }
-  usedNames.add(fname);
-  return fname;
 }
 
 // 폴더를 직접 선택해 이미지 파일을 그대로 저장(zip 압축 해제가 필요 없음).
@@ -1712,15 +1712,29 @@ async function saveRecordsToFolder(records, btn) {
     return;
   }
 
+  // 같은 날짜에 이미 저장된 파일이 있으면 덮어쓰지 않도록, 폴더 안의 기존 파일명을 먼저 확인해 둔다.
+  const existingNames = new Set();
+  try {
+    if (typeof dirHandle.values === 'function') {
+      for await (const entry of dirHandle.values()) {
+        if (entry.kind === 'file') existingNames.add(entry.name);
+      }
+    }
+  } catch (e) { /* 일부 환경에서 폴더 목록 열람이 안 되면 무시하고 진행 */ }
+
   const originalLabel = btn.textContent;
   btn.disabled = true;
-  const usedNames = new Set();
   let done = 0;
+  let seq = 1;
+  let writeError = null;
   try {
     for (const rec of records) {
       const imgRec = await dbGet('dictPageImage', rec.id);
       if (imgRec && imgRec.blob) {
-        const fname = uniqueResultFileName(usedNames, rec);
+        let fname = dateSeqFileName(seq);
+        while (existingNames.has(fname)) { seq++; fname = dateSeqFileName(seq); }
+        existingNames.add(fname);
+        seq++;
         const fileHandle = await dirHandle.getFileHandle(fname, { create: true });
         const writable = await fileHandle.createWritable();
         try {
@@ -1732,13 +1746,26 @@ async function saveRecordsToFolder(records, btn) {
       done++;
       btn.textContent = `저장 중… (${done}/${total})`;
     }
-    toast(`선택한 폴더에 이미지 ${total}장을 저장했습니다.`, 'success');
   } catch (e) {
-    console.error(e);
+    writeError = e;
+  }
+
+  // 버튼 상태는 다음 분기(압축 대체 저장 등)를 시작하기 전에 항상 먼저 원복해 둔다.
+  btn.disabled = false;
+  btn.textContent = originalLabel;
+
+  if (!writeError) {
+    toast(`선택한 폴더에 이미지 ${total}장을 저장했습니다.`, 'success');
+    return;
+  }
+
+  console.error(writeError);
+  if (done === 0) {
+    // 폴더에 한 장도 쓰지 못했다면(플랫폼이 실제로는 지원하지 않는 경우 등) 압축 파일로 대신 저장
+    toast('선택한 폴더에 저장할 수 없어 압축 파일로 대신 저장합니다.', 'error');
+    await saveRecordsAsZip(records, btn);
+  } else {
     toast('이미지 저장 중 오류가 발생했습니다.', 'error');
-  } finally {
-    btn.disabled = false;
-    btn.textContent = originalLabel;
   }
 }
 
@@ -1755,11 +1782,12 @@ async function saveRecordsAsZip(records, btn) {
   btn.textContent = '압축 파일 생성 중…';
   try {
     const zip = new window.JSZip();
-    const usedNames = new Set();
+    let seq = 1;
     for (const rec of records) {
       const imgRec = await dbGet('dictPageImage', rec.id);
       if (imgRec && imgRec.blob) {
-        zip.file(uniqueResultFileName(usedNames, rec), imgRec.blob);
+        zip.file(dateSeqFileName(seq), imgRec.blob);
+        seq++;
       }
     }
     const content = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE', compressionOptions: { level: 6 } });
@@ -1775,9 +1803,17 @@ async function saveRecordsAsZip(records, btn) {
   }
 }
 
+// 크롬 안드로이드는 showDirectoryPicker 함수 자체는 존재하지만(감지는 되지만),
+// 실제로 폴더에 파일을 쓰는 기능은 아직 정식 지원되지 않아 "경로 선택 후 오류"가 발생한다.
+// (Chromium 개발팀도 공식적으로 인정한 안드로이드 한정 문제) 그래서 안드로이드는 처음부터 zip 방식만 사용한다.
+function supportsFolderSave() {
+  const isAndroid = /Android/i.test(navigator.userAgent);
+  return typeof window.showDirectoryPicker === 'function' && !isAndroid;
+}
+
 async function saveRecords(records, btn) {
   if (records.length === 0) return;
-  if (typeof window.showDirectoryPicker === 'function') {
+  if (supportsFolderSave()) {
     await saveRecordsToFolder(records, btn);
   } else {
     await saveRecordsAsZip(records, btn);
